@@ -1,27 +1,66 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
-import os
-window=tk.Tk()
-window.title("Jumple Juggle")
-window.geometry('900x900')
-window.configure(background="#82E0AA")    
+import os  
+question1={"option":{1:"twice",2:"a day",3:"brush your",4:"teeth"},"answer":"brush your teeth twice a day "}
+question2={"option":{1:"a story",2:"narrating",3:"tomorrow",4:"I will be"},"answer":"I will be narrating a story tomorrow "}
+question3={"option":{1:"pray to",2:"we should",3:"daily",4:"god"},"answer":"we should pray to god daily "}
+question4={"option":{1:"father",2:"my",3:"me",4:"trust"},"answer":"my father trust me "}
+question5={"option":{1:"Delhi",2:"fort",3:"is in",4:"Red"},"answer":"Red fort is in Delhi "}
+question6={"option":{1:"the",2:"ball",3:"with",4:"Rohan",5:"is playing"},"answer":"Rohan is playing with the ball "}
+question7={"option":{1:"love",2:"of others",3:"good manners",4:"win the",5:"and respect"},"answer":"good manners win the love and respect of others "}
+question8={"option":{1:"the",2:"the",3:"kept",4:"rail safe",5:"sleeper"},"answer":"the sleeper kept the rail safe "}
+question9={"option":{1:"the",2:"jumped",3:"the dog",4:"pond",5:"into"},"answer":"the dog jumped into the pond "}
+question10={"option":{1:"is",2:"to school",3:"late",4:"Rishu",5:"always"},"answer":"Rishu is always late to school "}
+question11={"option":{1:"who is",2:"strangers",3:"respectful",4:"a person",5:"even",6:"like"},"answer":"even strangers like person who is respectful "}
+question12={"option":{1:"saves us",2:"turns away",3:"a soft answer",4:"anger and",5:"a pitfall",6:"from many"},"answer":"a soft answer turns away anger and saves us from many a pitfall  "}
+question13={"option":{1:"when",2:"best",3:"good manners can",4:"one is",5:"be learnt",6:"young"},"answer":"good amnners can be learnt best when one is young "}
+question14={"option":{1:"deadly weapons",2:"of",3:"science has",4:"warfare",5:"given",6:"man"},"answer":"science has given man deadly weapons of warfare "}
+question15={"option":{1:"armed",2:"which are",3:"miracles",4:"science has",5:"man with inventions",6:"not less than"},"answer":"science has armed man with inventions which are not less than miracles "}
+
+level1=[]
+level1.insert(0,question1)
+level1.insert(1,question2)
+level1.insert(2,question3)
+level1.insert(3,question4)
+level1.insert(4,question5)
+level1.insert(5,question6)
+level1.insert(6,question7)
+level1.insert(7,question8)
+level1.insert(8,question9)
+level1.insert(9,question10)
+level1.insert(10,question11)
+level1.insert(11,question12)
+level1.insert(12,question13)
+level1.insert(13,question14)
+level1.insert(14,question15)
+exp=""
+i=0
+point=0
 def main():
+    window=tk.Tk()
+    window.title("Jumple Juggle")
+    window.geometry('900x900')
+    window.configure(background="#82E0AA")  
     def login():
         flag=1
         user=phone.get()
         pas=password.get()
         if(str.isdigit(user)==False or len(user)!=10):
-                messagebox.showerror("Signup", "Input a valid number")
+                messagebox.showerror("Login", "Input a valid number")
                 loginph.set("")
                 flag=0
+        if(pas==""):
+            messagebox.showerror("Login", "Enter password first")
+            flag=0
         if(flag==1):
             if(os.path.exists(user)):
                 file=open(user,"rt")
                 text=file.readline()
                 text=text[0:-1]
                 if(text==pas):
-                    print(pas,text)
+                    window.destroy()
+                    game(user)
                 else:
                     messagebox.showerror("Login","Wrong Password")
                     lpass.set("")
@@ -80,6 +119,7 @@ def signup():
                     file.close()
                     messagebox.showinfo("Signup", "You are registered succesfully")
                     sign.destroy()
+                    main()
                     
             return
     sign=tk.Tk()
@@ -105,5 +145,81 @@ def signup():
     Email.grid(row=10,column=4)
     signupbt=Button(sign,text="Register",bg="Black",fg="White",height="2",width="6",command=register).grid(row=15,column=2)
     sign.mainloop()
+    
+def game(phno):
+    forward=phno
+    global i
+    global point
+    global exp
+    rajat=tk.Tk()
+    rajat.configure(bg="#F1C40F")
+    setans= StringVar()
+    ansbox=Entry(rajat,text="",width="50",state="disabled",textvariable=setans)
+    ansbox.grid(row=5,column=1,columnspan=5,sticky="W",ipady="3",pady="4")
+    rajat.title("Jumble Juggle")
+    file=open(phno,"rt")
+    file.readline()
+    usernam=file.readline()
+    file.close()
+    usernam="Hello "+str.capitalize(usernam)
+    pointbox=Label(rajat,text="Points:",bg="#F1C40F")
+    pointbox.grid(row=1,column=0,sticky="E")
+    poin= IntVar()
+    poin.set(point)
+    setpoint=Entry(rajat,state="disabled",bd=0,textvariable=poin,disabledbackground="#F1C40F")
+    setpoint.grid(row=1,column=1,sticky="W")
+    poin.set(point)
+    user=Label(rajat,text=usernam,bg="#F1C40F",fg="#3498DB")
+    user.grid(row=1,column=4,sticky="E")
+    def add(got):
+        global exp
+        exp=exp+got
+        exp=exp+" "
+        print(exp)
+        setans.set(exp)
+        forward=phno
+    def check():
+        global exp
+        global point
+        global i
+        if(exp==level1[i]["answer"]):
+            print("true")
+            exp=""
+            setans.set(exp)
+            point+=5
+            i+=1
+            rajat.destroy()
+            game(forward)
+        else:
+            exp=""
+            setans.set(exp)
+            i+=1
+            rajat.destroy()
+            game(forward)
+    def clear():
+        global exp
+        exp=""
+        setans.set(exp)
+    bt1=Button(rajat,text=level1[i]["option"][1],height="4",bg="#5DADE2",fg="#CB4335",bd=0,command=lambda: add(level1[i]["option"][1]))
+    bt2=Button(rajat,text=level1[i]["option"][2],height="4",bg="#5DADE2",fg="#CB4335",bd=0,command=lambda: add(level1[i]["option"][2]))
+    bt3=Button(rajat,text=level1[i]["option"][3],height="4",bg="#5DADE2",fg="#CB4335",bd=0,command=lambda: add(level1[i]["option"][3]))
+    bt4=Button(rajat,text=level1[i]["option"][4],height="4",bg="#5DADE2",fg="#CB4335",bd=0,command=lambda: add(level1[i]["option"][4]))
+    bt1.grid(row=3,column=1)
+    bt2.grid(row=3,column=2)
+    bt3.grid(row=3,column=3)
+    bt4.grid(row=3,column=4)
+    if(i>=5):
+        bt5=Button(rajat,text=level1[i]["option"][5],height="4",bg="#5DADE2",fg="#CB4335",bd=0,command=lambda: add(level1[i]["option"][5]))
+        bt5.grid(row=3,column=5)
+    if(i>=10):
+        bt6=Button(rajat,text=level1[i]["option"][6],height="4",bg="#5DADE2",fg="#CB4335",bd=0,command=lambda: add(level1[i]["option"][6]))
+        bt6.grid(row=3,column=6)
+    chk=Button(rajat,text="Submit",command=check,bd=0,width="5",height="2",bg="#E74C3C",fg="White")
+    chk.grid(row=10,column=4,sticky="W",ipadx=3,ipady=2)
+    ans=Label(rajat,text="Answer:",bg="#F1C40F")
+    ans.grid(row=5,column=0,sticky="E")
+    clr=Button(rajat,text="Clear",command=clear,bd=0,width="5",height="2",bg="#E74C3C",fg="White")
+    clr.grid(row=10,column=3,sticky="E",padx=1,ipadx=3,ipady=2)
+    rajat.mainloop()
 
 main()
