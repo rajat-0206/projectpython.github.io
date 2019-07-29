@@ -42,6 +42,7 @@ def main():
     window.title("Jumple Juggle")
     window.geometry('900x900')
     window.configure(background="#82E0AA")  
+    window.iconbitmap("Game.ico")
     def login():
         flag=1
         user=phone.get()
@@ -124,6 +125,7 @@ def signup():
             return
     sign=tk.Tk()
     sign.title("SIGN UP")
+    sign.iconbitmap("Game.ico")
     sign.geometry("900x900")
     sign.configure(background="White")
     Label(sign,text="REGISTER",fg="Blue",bg="white",font=("REGISTER", 48),justify="center").grid(row=1)
@@ -153,6 +155,7 @@ def game(phno):
     global exp
     rajat=tk.Tk()
     rajat.configure(bg="#F1C40F")
+    rajat.iconbitmap("Game.ico")
     setans= StringVar()
     ansbox=Entry(rajat,text="",width="50",state="disabled",textvariable=setans)
     ansbox.grid(row=5,column=1,columnspan=5,sticky="W",ipady="3",pady="4")
@@ -220,6 +223,27 @@ def game(phno):
     ans.grid(row=5,column=0,sticky="E")
     clr=Button(rajat,text="Clear",command=clear,bd=0,width="5",height="2",bg="#E74C3C",fg="White")
     clr.grid(row=10,column=3,sticky="E",padx=1,ipadx=3,ipady=2)
+        #from here we are making instruction
+    def destroy():
+        frame.destroy()
+    frame=Frame(rajat,bg="#2ECC71")
+    frame.grid(row=2,column=1,rowspan=50,columnspan="90",sticky="N")
+    intro=Label(frame,text="Instruction",width="50",bg="#2ECC71")
+    intro.grid(row=1,column=0,rowspan=2)
+    cross=Button(frame,text="X",command=destroy,bg="#2ECC71",bd=0,highlightcolor="Red")
+    t1=Label(frame,text="1. This game contain many boxes which contain different words written on them.",bg="#2ECC71",height="2")
+    t1.grid(row=3,sticky="W")
+    t2=Label(frame,text="2. You have to click on boxes in such a way that words when joined\ntogether form a meaningful sentece.",bg="#2ECC71",height="2")
+    t2.grid(row=5,sticky="W")
+    t3=Label(frame,text="3. Click on the submit button when you are sure sentence is meaningful.",bg="#2ECC71",height="2")
+    t3.grid(row=7,sticky="W")
+    t4=Label(frame,text="4. If you think you have clicked on wrong box, you can click on\nclear button to reset your answer.",bg="#2ECC71",height="2")
+    t4.grid(row=9,sticky="W")
+    t5=Label(frame,text="5. The game contain three level and 5 question in each level. ",bg="#2ECC71",height="2")
+    t5.grid(row=11,sticky="W")
+    t6=Label(frame,text="6. You will get 5 points on correct answer and 0 if answer is wrong. ",bg="#2ECC71",height="2")
+    t6.grid(row=13,sticky="W")
+    cross.grid(row=1,column=4,ipadx=2,ipady=2)
     rajat.mainloop()
 
 main()
