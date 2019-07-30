@@ -37,6 +37,7 @@ level1.insert(14,question15)
 exp=""
 i=0
 point=0
+gameplay=0
 def main():
     window=tk.Tk()
     window.title("Jumple Juggle")
@@ -156,6 +157,49 @@ def game(phno):
     rajat=tk.Tk()
     rajat.configure(bg="#F1C40F")
     rajat.iconbitmap("Game.ico")
+     #view profile
+    def viewprofile():
+        def hide():
+            profileframe.destroy()
+        profileframe=Frame(rajat,bg="#E74C3C",height="50",width="60")
+        profileframe.grid(row=2,column=1,rowspan=50,columnspan="90",sticky="N")
+        Label(profileframe,text="Profile",bg="#E74C3C",width="50").grid(row=1,column=0,columnspan="4")
+        cut=Button(profileframe,text="X",command=hide,bg="#E74C3C",bd=0,highlightcolor="Red")
+        cut.grid(row=1,column=4,sticky="E")
+        file=open("8447234865","rt")
+        file.readline()
+        Label(profileframe,text="Phone Number:",bg="#E74C3C").grid(row=3,column=1,sticky="W")
+        no=IntVar()
+        Entry(profileframe,state="disabled",textvariable=no,justify="center",bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=3,column=2,sticky="W")
+        no.set(forward)
+        Label(profileframe,text="Name:",bg="#E74C3C").grid(row=4,column=1,sticky="W")
+        Name=StringVar()
+        Entry(profileframe,state="disabled",textvariable=Name,justify="center",bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=4,column=2,sticky="W")
+        tempvar1=file.readline()
+        Name.set(tempvar1)
+        Label(profileframe,text="Phone Number:",bg="#E74C3C").grid(row=5,column=1,sticky="W")
+        Emailid=StringVar()
+        Entry(profileframe,state="disabled",textvariable=Emailid,justify="center",bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=5,column=2,sticky="W")
+        tempvar2=file.readline()
+        Emailid.set(tempvar2)
+        file.close()
+    def logout():
+        global exp
+        global point
+        global i
+        exp=""
+        i=0
+        point=0
+        rajat.destroy()
+        main()
+    user=Label(rajat,text="Hello Rajat",bg="#F1C40F",fg="#3498DB")
+    user.grid(row=1,column=4,sticky="E")
+    mb=  Menubutton (rajat, text="▼",bd=0,bg="#F1C40F",activebackground="#F1C40F",activeforeground="Blue")
+    mb.grid(row=1,column=5,sticky="W")
+    mb.menu =  Menu ( mb, tearoff = 0 )
+    mb["menu"] =  mb.menu
+    mb.menu.add_cascade( label="View Profile",command=viewprofile)
+    mb.menu.add_cascade( label="Logout",command=logout)
     setans= StringVar()
     ansbox=Entry(rajat,text="",width="50",state="disabled",textvariable=setans)
     ansbox.grid(row=5,column=1,columnspan=5,sticky="W",ipady="3",pady="4")
@@ -185,6 +229,7 @@ def game(phno):
         global exp
         global point
         global i
+        global gameplay
         if(exp==level1[i]["answer"]):
             print("true")
             exp=""
@@ -192,12 +237,14 @@ def game(phno):
             point+=5
             i+=1
             rajat.destroy()
+            gameplay+=1
             game(forward)
         else:
             exp=""
             setans.set(exp)
             i+=1
             rajat.destroy()
+            gameplay+=1
             game(forward)
     def clear():
         global exp
@@ -224,26 +271,27 @@ def game(phno):
     clr=Button(rajat,text="Clear",command=clear,bd=0,width="5",height="2",bg="#E74C3C",fg="White")
     clr.grid(row=10,column=3,sticky="E",padx=1,ipadx=3,ipady=2)
         #from here we are making instruction
-    def destroy():
-        frame.destroy()
-    frame=Frame(rajat,bg="#2ECC71")
-    frame.grid(row=2,column=1,rowspan=50,columnspan="90",sticky="N")
-    intro=Label(frame,text="Instruction",width="50",bg="#2ECC71")
-    intro.grid(row=1,column=0,rowspan=2)
-    cross=Button(frame,text="X",command=destroy,bg="#2ECC71",bd=0,highlightcolor="Red")
-    t1=Label(frame,text="1. This game contain many boxes which contain different words written on them.",bg="#2ECC71",height="2")
-    t1.grid(row=3,sticky="W")
-    t2=Label(frame,text="2. You have to click on boxes in such a way that words when joined\ntogether form a meaningful sentece.",bg="#2ECC71",height="2")
-    t2.grid(row=5,sticky="W")
-    t3=Label(frame,text="3. Click on the submit button when you are sure sentence is meaningful.",bg="#2ECC71",height="2")
-    t3.grid(row=7,sticky="W")
-    t4=Label(frame,text="4. If you think you have clicked on wrong box, you can click on\nclear button to reset your answer.",bg="#2ECC71",height="2")
-    t4.grid(row=9,sticky="W")
-    t5=Label(frame,text="5. The game contain three level and 5 question in each level. ",bg="#2ECC71",height="2")
-    t5.grid(row=11,sticky="W")
-    t6=Label(frame,text="6. You will get 5 points on correct answer and 0 if answer is wrong. ",bg="#2ECC71",height="2")
-    t6.grid(row=13,sticky="W")
-    cross.grid(row=1,column=4,ipadx=2,ipady=2)
+    if(gameplay==0):
+        def destroy():
+            frame.destroy()
+            frame=Frame(rajat,bg="#2ECC71")
+        frame.grid(row=2,column=1,rowspan=50,columnspan="90",sticky="N")
+        intro=Label(frame,text="Instruction",width="50",bg="#2ECC71")
+        intro.grid(row=1,column=0,rowspan=2)
+        cross=Button(frame,text="X",command=destroy,bg="#2ECC71",bd=0,highlightcolor="Red")
+        t1=Label(frame,text="1. This game contain many boxes which contain different words written on them.",bg="#2ECC71",height="2")
+        t1.grid(row=3,sticky="W")
+        t2=Label(frame,text="2. You have to click on boxes in such a way that words when joined\ntogether form a meaningful sentece.",bg="#2ECC71",height="2")
+        t2.grid(row=5,sticky="W")
+        t3=Label(frame,text="3. Click on the submit button when you are sure sentence is meaningful.",bg="#2ECC71",height="2")
+        t3.grid(row=7,sticky="W")
+        t4=Label(frame,text="4. If you think you have clicked on wrong box, you can click on\nclear button to reset your answer.",bg="#2ECC71",height="2")
+        t4.grid(row=9,sticky="W")
+        t5=Label(frame,text="5. The game contain three level and 5 question in each level. ",bg="#2ECC71",height="2")
+        t5.grid(row=11,sticky="W")
+        t6=Label(frame,text="6. You will get 5 points on correct answer and 0 if answer is wrong. ",bg="#2ECC71",height="2")
+        t6.grid(row=13,sticky="W")
+        cross.grid(row=1,column=4,ipadx=2,ipady=2)
     rajat.mainloop()
 
 main()
