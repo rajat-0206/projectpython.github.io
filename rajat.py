@@ -162,8 +162,52 @@ def game(phno):
     def viewprofile():
         def hide():
             profileframe.destroy()
+        def update(string,i):
+            if(i==1):
+                if(string=="Enter new name"):
+                    messagebox.showerror("Jumble Juggle","Please provide input")
+                elif((str.isalpha(string)==False)and(" " not in string)):
+                        messagebox.showerror("Jumble Juggle","Name must be in letters")
+                else:
+                    file=open(forward,"rt")
+                    data=file.readlines()
+                    file.close()
+                    data[1]=string+"\n"
+                    file=open(forward,"w")
+                    file.writelines(data)
+                    file.close()
+                    messagebox.showinfo("Jumble Juggle", "Update Successful")
+                    rajat.destroy()
+                    game(forward)
+            else:
+                if(string=="Enter new Email"):
+                    messagebox.showerror("Jumble Juggle","Please provide input")
+                elif("@" not in string or ".com" not in string):
+                    messagebox.showerror("Jumble Juggle", "Input a valid Email") 
+                else:
+                    file=open(forward,"rt")
+                    data=file.readlines()
+                    file.close()
+                    data[2]=string+"\n"
+                    file=open(forward,"w")
+                    file.writelines(data)
+                    file.close()
+                    messagebox.showinfo("Jumble Juggle", "Update Successful")
+                    rajat.destroy()
+                    game(forward)
+        def edit(i):
+            getans=Entry(profileframe,width="30",font=("Berlin Sans FB Demi","14"),bd=0)
+            getans.grid(row=6,column=1,sticky="W",padx=2,pady=2,ipady=2)
+            if(i==1):
+                getans.insert(0,"Enter new name")
+                finalbt=Button(profileframe,bd=0,bg="#2D69AB",fg="White",font=("Cooper Black","12"),text="Update",command=lambda:update(getans.get(),1))
+                finalbt.grid(row=8,column=1,padx=2,ipadx=2,ipady=2)
+            else:
+                getans.insert(0,"Enter new Email")
+                finalbt=Button(profileframe,bd=0,bg="#2D69AB",font=("Cooper Black","12"),fg="White",text="Update",command=lambda:update(getans.get(),2))
+                finalbt.grid(row=8,column=1,padx=2,ipadx=2,ipady=2)
         profileframe=Frame(rajat,bg="#E74C3C",height="50",width="60")
-        profileframe.grid(row=2,column=1,rowspan=50,columnspan="90",sticky="N")
+        profileframe.grid(row=6,column=1,rowspan=50,columnspan="90",sticky="N")
         Label(profileframe,text="Profile",font=("Britannic Bold","18"),bg="#E74C3C",width="50").grid(row=1,column=0,columnspan="4")
         cut=Button(profileframe,text="X",command=hide,font="14",bg="#E74C3C",bd=0,activebackground="#E74C3C",activeforeground="White")
         cut.grid(row=1,column=4,sticky="E")
@@ -178,11 +222,15 @@ def game(phno):
         Entry(profileframe,state="disabled",font=("Berlin Sans FB","14"),textvariable=Name,bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=4,column=2,sticky="W")
         tempvar1=file.readline()
         Name.set(tempvar1)
-        Label(profileframe,text="Phone Number:",font=("Berlin Sans FB","14"),bg="#E74C3C").grid(row=5,column=1,sticky="E")
+        ed1=Button(profileframe,text="edit",bg="#E74C3C",fg="White",bd=0,command=lambda:edit(1))
+        ed1.grid(row=4,column=3,sticky="W")
+        Label(profileframe,text="Email Id:",font=("Berlin Sans FB","14"),bg="#E74C3C").grid(row=5,column=1,sticky="E")
         Emailid=StringVar()
         Entry(profileframe,state="disabled",font=("Berlin Sans FB","14"),textvariable=Emailid,bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=5,column=2,sticky="W")
         tempvar2=file.readline()
         Emailid.set(tempvar2)
+        ed2=Button(profileframe,text="edit",bg="#E74C3C",fg="White",bd=0,command=lambda:edit(2))
+        ed2.grid(row=5,column=3,sticky="W")
         file.close()
     def logout():
         global exp
@@ -201,7 +249,7 @@ def game(phno):
     file.readline()
     usernam=file.readline()
     file.close()
-    usernam="Hello "+str.capitalize(usernam)
+    usernam="Hello "+str.title(usernam)
     user=Label(rajat,text=usernam,font=("Arial","18"),bg="#F1C40F",fg="#3498DB")
     user.grid(row=1,column=4,sticky="E")
     mb=  Menubutton (rajat,text="▼",bd=0,bg="#F1C40F",font=("Arial","14"),activebackground="#F1C40F",activeforeground="#CB4335")
@@ -292,6 +340,6 @@ def game(phno):
         t6=Label(frame,text="6. You will get 5 points on correct answer and 0 if answer is wrong. ",bg="#2ECC71",height="2",font=("Arial Black","14"))
         t6.grid(row=13,sticky="W")
         cross.grid(row=1,column=4,ipadx=2,ipady=2)
-        rajat.mainloop()
-
+    rajat.mainloop()
+    
 main()
