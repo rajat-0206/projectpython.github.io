@@ -158,6 +158,8 @@ def game(phno):
     global gameplay
     rajat=tk.Tk()
     rajat.configure(bg="#F1C40F")
+    rajat.iconbitmap("Game.ico")
+    rajat.geometry("900x900")
     #view profile
     def viewprofile():
         def hide():
