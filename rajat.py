@@ -43,8 +43,47 @@ def main():
     window.title("Jumple Juggle")
     window.geometry('900x900')
     window.configure(background="#82E0AA")  
-    window.iconbitmap("Game.ico")
+    #window.iconbitmap("Game.ico")
     def login():
+        def forgotpass():
+            def check():
+                flag=1
+                file=open(user,"rt")
+                data=file.readlines()
+                print(data)
+                file.close()
+                if(testem.get()!=data[2]):
+                    messagebox.showerror("Forgot Password","The Email you entered did not matched with our records")
+                    flag=0
+                else:
+                    if(len(getpass.get())<8):
+                       messagebox.showerror("Forgot Password","Password must be eight letters long")
+                       flag=0
+                if(flag==1):
+                    data[0]=getpass.get()+"\n"
+                    messagebox.showinfo("Forgot Password","Password reset successful")
+                    file=open(user,"wt")
+                    file.writelines(data)
+                    file.close()
+                    forgot.destroy()
+                    window.destroy()
+                    main()
+            def hide():
+                forgot.destroy()
+            forgot=Frame(window,bg="#E74C3C",height="50",width="60")
+            forgot.grid(row=2,column=1,rowspan=50,columnspan="90",sticky="N")
+            Label(forgot,text="Reset Password",font=("Britannic Bold","18"),bg="#E74C3C",width="50").grid(row=1,column=0,columnspan="4")
+            cut=Button(forgot,text="X",command=hide,bg="#E74C3C",bd=0,highlightcolor="Red")
+            cut.grid(row=1,column=4,sticky="E")
+            Label(forgot,text="Enter your Email:",bg="#E74C3C").grid(row=3,column=1,sticky="W")
+            testem=Entry(forgot,bd=0,foreground="#17202A")
+            testem.grid(row=3,column=2,sticky="W")
+            Label(forgot,text="Enter new password:",bg="#E74C3C").grid(row=4,column=1,sticky="W")
+            getpass=Entry(forgot,justify="center",bd=0,foreground="#17202A")
+            getpass.grid(row=4,column=2,sticky="W")
+            print("in fuction all set")
+            chk=Button(forgot,text="Reset Password",font=("Cooper Black","12"),command=check,bd=0,height="2",bg="#F7DC6F",fg="White")
+            chk.grid(row=6,column=4,sticky="W",padx=2,ipadx=3,ipady=2)
         flag=1
         user=phone.get()
         pas=password.get()
@@ -64,7 +103,10 @@ def main():
                     window.destroy()
                     game(user)
                 else:
-                    messagebox.showerror("Login","Wrong Password")
+                    msg=messagebox.askretrycancel("Login","Wrong Password")
+                    print(msg)
+                    if(msg==False):
+                        forgotpass()
                     lpass.set("")
             else:
                 msg=messagebox.askquestion("Login","This number is not registered.Do you want to signup?",icon='warning')
