@@ -50,15 +50,17 @@ def main():
                 flag=1
                 file=open(user,"rt")
                 data=file.readlines()
-                print(data)
                 file.close()
-                if(testem.get()!=data[2]):
+                if(testem.get()!=data[2][:-1]):
                     messagebox.showerror("Forgot Password","The Email you entered did not matched with our records")
                     flag=0
                 else:
                     if(len(getpass.get())<8):
-                       messagebox.showerror("Forgot Password","Password must be eight letters long")
-                       flag=0
+                        messagebox.showerror("Forgot Password","Password must be eight letters long")
+                        flag=0
+                    if(getpass.get()!=getpass1.get()):
+                        messagebox.showerror("Forgot Password","Cnfirm Password don't match")
+                        flag=0
                 if(flag==1):
                     data[0]=getpass.get()+"\n"
                     messagebox.showinfo("Forgot Password","Password reset successful")
@@ -71,19 +73,21 @@ def main():
             def hide():
                 forgot.destroy()
             forgot=Frame(window,bg="#E74C3C",height="50",width="60")
-            forgot.grid(row=2,column=1,rowspan=50,columnspan="90",sticky="N")
+            forgot.grid(row=3,column=2,rowspan=50,columnspan="90",sticky="N")
             Label(forgot,text="Reset Password",font=("Britannic Bold","18"),bg="#E74C3C",width="50").grid(row=1,column=0,columnspan="4")
-            cut=Button(forgot,text="X",command=hide,bg="#E74C3C",bd=0,highlightcolor="Red")
+            cut=Button(forgot,text="X",command=hide,bg="#E74C3C",font=("Arial Black","12"),bd=0,highlightcolor="Red")
             cut.grid(row=1,column=4,sticky="E")
-            Label(forgot,text="Enter your Email:",bg="#E74C3C").grid(row=3,column=1,sticky="W")
-            testem=Entry(forgot,bd=0,foreground="#17202A")
-            testem.grid(row=3,column=2,sticky="W")
-            Label(forgot,text="Enter new password:",bg="#E74C3C").grid(row=4,column=1,sticky="W")
-            getpass=Entry(forgot,justify="center",bd=0,foreground="#17202A")
-            getpass.grid(row=4,column=2,sticky="W")
-            print("in fuction all set")
-            chk=Button(forgot,text="Reset Password",font=("Cooper Black","12"),command=check,bd=0,height="2",bg="#F7DC6F",fg="White")
-            chk.grid(row=6,column=4,sticky="W",padx=2,ipadx=3,ipady=2)
+            Label(forgot,text="Enter your Email",font=("Elephant","16"),bg="#E74C3C").grid(row=3,column=1,pady=4,ipady=2,sticky="E")
+            testem=Entry(forgot,bd=0,font=("Arial Black","16"),foreground="#17202A")
+            testem.grid(row=3,column=2,pady=4,ipady=2,sticky="W")
+            Label(forgot,text="Enter new password",font=("Elephant","16"),bg="#E74C3C").grid(row=5,column=1,pady=4,ipady=2,sticky="E")
+            getpass=Entry(forgot,show="*",font=("Arial Black","16"),bd=0,foreground="#17202A")
+            getpass.grid(row=5,column=2,pady=4,ipady=2,sticky="W")
+            Label(forgot,text="Confirm password",font=("Elephant","16"),bg="#E74C3C").grid(row=7,column=1,pady=4,ipady=2,sticky="E")
+            getpass1=Entry(forgot,show="*",font=("Arial Black","16"),bd=0,foreground="#17202A")
+            getpass1.grid(row=7,pady=4,ipady=2,column=2,sticky="W")
+            chk=Button(forgot,text="Reset Password",font=("Cooper Black","12"),command=check,bd=0,height="2",bg="#F7DC6F",fg="Black")
+            chk.grid(row=9,column=2,sticky="W",padx=2,ipadx=3,ipady=2,pady=2)
         flag=1
         user=phone.get()
         pas=password.get()
@@ -104,7 +108,6 @@ def main():
                     game(user)
                 else:
                     msg=messagebox.askretrycancel("Login","Wrong Password")
-                    print(msg)
                     if(msg==False):
                         forgotpass()
                     lpass.set("")
@@ -113,19 +116,21 @@ def main():
                 if(msg=="yes"):
                     window.destroy()
                     signup()
-    Label(window,text="LOGIN",fg="#E74C3C",bg="#82E0AA",font=("LOGIN", 48),justify="center").grid(row=1,column=5)
-    Label(window,text="Phone Number",fg="Black",bg="#82E0AA",font=("Phone Number", 20),justify="left").grid(row=14)
+    Label(window,text="LOGIN",fg="#E74C3C",bg="#82E0AA",font=("LOGIN", 48),justify="center").grid(row=1,column=1,columnspan=4)
+    Label(window,text="Phone Number",fg="Black",bg="#82E0AA",font=("Elephant", 20),justify="left").grid(sticky="W",row=3,column=2)
     loginph= StringVar()
-    phone=Entry(window,bd=3,fg="Black",cursor="mouse",bg="white",textvariable=loginph)
-    phone.grid(row=14,column=4)
+    phone=Entry(window,fg="Black",bd=0,font=("Arial Black","16"),cursor="mouse",bg="white",textvariable=loginph)
+    phone.grid(row=3,column=3,ipadx=2,ipady=2,padx=2,pady=3)
     lpass= StringVar()
-    Label(window,text="Password",fg="Black",bg="#82E0AA",font=("Password", 20),justify="left",).grid(row=16)
-    password=Entry(window,bd=3,fg="Black",cursor="mouse",bg="White",show="*",textvariable=lpass)
-    password.grid(row=16,column=4)
-    Loginbt=Button(window,text="Login",bg="#E74C3C",fg="black",height="2",width="6",font="YELLOWTAIL",relief="flat",activeforeground="white",activebackground="#E74C3C",command=login).grid(row=20,column=3)
+    Label(window,text="Password",fg="Black",bg="#82E0AA",font=("Elephant", 20),justify="left").grid(sticky="E",row=4,column=2)
+    password=Entry(window,fg="Black",bd=0,cursor="mouse",font=("Arial Black","16"),bg="White",show="*",textvariable=lpass)
+    password.grid(row=4,column=3,ipadx=2,ipady=2,padx=2,pady=3)
+    Loginbt=Button(window,text="Login",bg="#E74C3C",fg="black",height="2",width="6",font=("Yelowtail","14"),relief="flat",activeforeground="white",activebackground="#E74C3C",command=login).grid(row=5,column=3)
     window.mainloop()
 
 def signup():
+    global point
+    global i
     def register():
             flag=1
             phn=phone.get()
@@ -161,6 +166,10 @@ def signup():
                     file.write(nam)
                     file.write("\n")
                     file.write(email)
+                    file.write("\n")
+                    file.write(str(point))
+                    file.write("\n")
+                    file.write(str(i))
                     file.close()
                     messagebox.showinfo("Signup", "You are registered succesfully")
                     sign.destroy()
@@ -194,10 +203,15 @@ def signup():
     
 def game(phno):
     forward=phno
-    global i
     global point
     global exp
     global gameplay
+    global i
+    if(gameplay==0):
+        file=open(forward,"rt")
+        data=file.readlines()
+        i=int(data[4])
+        point=int(data[3][:-1])
     rajat=tk.Tk()
     rajat.configure(bg="#F1C40F")
     rajat.iconbitmap("Game.ico")
@@ -273,6 +287,16 @@ def game(phno):
         Entry(profileframe,state="disabled",font=("Berlin Sans FB","14"),textvariable=Emailid,bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=5,column=2,sticky="W")
         tempvar2=file.readline()
         Emailid.set(tempvar2)
+        Label(profileframe,text="Points:",font=("Berlin Sans FB","14"),bg="#E74C3C").grid(row=6,column=1,sticky="E")
+        setpoint=StringVar()
+        Entry(profileframe,state="disabled",font=("Berlin Sans FB","14"),textvariable=setpoint,bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=6,column=2,sticky="W")
+        tempvar3=file.readline()
+        setpoint.set(tempvar3)
+        Label(profileframe,text="Cuurently on level:",font=("Berlin Sans FB","14"),bg="#E74C3C").grid(row=7,column=1,sticky="E")
+        showlevel=StringVar()
+        Entry(profileframe,state="disabled",font=("Berlin Sans FB","14"),textvariable=showlevel,bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=7,column=2,sticky="W")
+        tempvar4=file.readline()
+        showlevel.set(tempvar4)
         ed2=Button(profileframe,text="edit",bg="#E74C3C",fg="White",bd=0,command=lambda:edit(2))
         ed2.grid(row=5,column=3,sticky="W")
         file.close()
@@ -280,6 +304,16 @@ def game(phno):
         global exp
         global point
         global i
+        global gameplay
+        file=open(forward,"rt")
+        data=file.readlines()
+        file.close()
+        data[3]=str(point)+"\n"
+        data[4]=str(i)
+        file=open(forward,"wt")
+        file.writelines(data)
+        file.close()
+        gameplay=0
         exp=""
         i=0
         point=0
@@ -313,7 +347,6 @@ def game(phno):
         global exp
         exp=exp+got
         exp=exp+" "
-        print(exp)
         setans.set(exp)
         forward=phno
     def check():
@@ -322,20 +355,19 @@ def game(phno):
         global point
         global i
         if(exp==level1[i]["answer"]):
-            print("true")
             exp=""
             setans.set(exp)
             point+=5
             i+=1
-            rajat.destroy()
             gameplay+=1
+            rajat.destroy()
             game(forward)
         else:
             exp=""
             setans.set(exp)
             i+=1
             gameplay+=1
-            rajat.destroy()
+            rajat.destroy()  
             game(forward)
     def clear():
         global exp
