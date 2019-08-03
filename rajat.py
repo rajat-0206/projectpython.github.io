@@ -8,15 +8,15 @@ question3={"option":{1:"pray to",2:"we should",3:"daily",4:"god"},"answer":"we s
 question4={"option":{1:"father",2:"my",3:"me",4:"trust"},"answer":"my father trust me "}
 question5={"option":{1:"Delhi",2:"fort",3:"is in",4:"Red"},"answer":"Red fort is in Delhi "}
 question6={"option":{1:"the",2:"ball",3:"with",4:"Rohan",5:"is playing"},"answer":"Rohan is playing with the ball "}
-question7={"option":{1:"love",2:"of others",3:"good manners",4:"win the",5:"and respect"},"answer":"good manners win the love and respect of others "}
+question7={"option":{1:"love",2:"of others",3:"good\nmanners",4:"win the",5:"and respect"},"answer":"good manners win the love and respect of others "}
 question8={"option":{1:"the",2:"the",3:"kept",4:"rail safe",5:"sleeper"},"answer":"the sleeper kept the rail safe "}
 question9={"option":{1:"the",2:"jumped",3:"the dog",4:"pond",5:"into"},"answer":"the dog jumped into the pond "}
 question10={"option":{1:"is",2:"to school",3:"late",4:"Rishu",5:"always"},"answer":"Rishu is always late to school "}
 question11={"option":{1:"who is",2:"strangers",3:"respectful",4:"a person",5:"even",6:"like"},"answer":"even strangers like person who is respectful "}
-question12={"option":{1:"saves us",2:"turns away",3:"a soft answer",4:"anger and",5:"a pitfall",6:"from many"},"answer":"a soft answer turns away anger and saves us from many a pitfall  "}
-question13={"option":{1:"when",2:"best",3:"good manners can",4:"one is",5:"be learnt",6:"young"},"answer":"good amnners can be learnt best when one is young "}
-question14={"option":{1:"deadly weapons",2:"of",3:"science has",4:"warfare",5:"given",6:"man"},"answer":"science has given man deadly weapons of warfare "}
-question15={"option":{1:"armed",2:"which are",3:"miracles",4:"science has",5:"man with inventions",6:"not less than"},"answer":"science has armed man with inventions which are not less than miracles "}
+question12={"option":{1:"saves us",2:"turns away",3:"a\nsoft\nanswer",4:"anger and",5:"a pitfall",6:"from many"},"answer":"a soft answer turns away anger and saves us from many a pitfall  "}
+question13={"option":{1:"when",2:"best",3:"good\nmanners\ncan",4:"one is",5:"be learnt",6:"young"},"answer":"good amnners can be learnt best when one is young "}
+question14={"option":{1:"deadly\nweapons",2:"of",3:"science\nhas",4:"warfare",5:"given",6:"man"},"answer":"science has given man deadly weapons of warfare "}
+question15={"option":{1:"armed",2:"which are",3:"miracles",4:"science\nhas",5:"man\nwith\ninventions",6:"not less than"},"answer":"science has armed man with inventions which are not less than miracles "}
 
 level1=[]
 level1.insert(0,question1)
@@ -361,14 +361,21 @@ def game(phno):
             i+=1
             gameplay+=1
             rajat.destroy()
-            game(forward)
         else:
             exp=""
             setans.set(exp)
             i+=1
             gameplay+=1
             rajat.destroy()  
-            game(forward)
+        file=open(forward,"rt")
+        data=file.readlines()
+        file.close()
+        data[3]=str(point)+"\n"
+        data[4]=str(i)
+        file=open(forward,"wt")
+        file.writelines(data)
+        file.close()
+        game(forward)
     def clear():
         global exp
         exp=""
