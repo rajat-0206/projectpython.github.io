@@ -43,7 +43,7 @@ def main():
     window.title("Jumple Juggle")
     window.geometry('900x900')
     window.configure(background="#82E0AA")  
-    #window.iconbitmap("Game.ico")
+    window.iconbitmap("Game.ico")
     def login():
         def forgotpass():
             def check():
@@ -218,6 +218,7 @@ def game(phno):
     rajat.geometry("900x900")
     #view profile
     def viewprofile():
+        global i
         def hide():
             profileframe.destroy()
         def update(string,i):
@@ -255,15 +256,15 @@ def game(phno):
                     game(forward)
         def edit(i):
             getans=Entry(profileframe,width="30",font=("Berlin Sans FB Demi","14"),bd=0)
-            getans.grid(row=6,column=1,sticky="W",padx=2,pady=2,ipady=2)
+            getans.grid(row=9,column=1,columnspan=2,padx=2,pady=2,ipady=2)
             if(i==1):
                 getans.insert(0,"Enter new name")
                 finalbt=Button(profileframe,bd=0,bg="#2D69AB",fg="White",font=("Cooper Black","12"),text="Update",command=lambda:update(getans.get(),1))
-                finalbt.grid(row=8,column=1,padx=2,ipadx=2,ipady=2)
+                finalbt.grid(row=10,column=1,columnspan=2,padx=2,ipadx=2,ipady=2)
             else:
                 getans.insert(0,"Enter new Email")
                 finalbt=Button(profileframe,bd=0,bg="#2D69AB",font=("Cooper Black","12"),fg="White",text="Update",command=lambda:update(getans.get(),2))
-                finalbt.grid(row=8,column=1,padx=2,ipadx=2,ipady=2)
+                finalbt.grid(row=10,column=1,columnspan=2,padx=2,ipadx=2,ipady=2)
         profileframe=Frame(rajat,bg="#E74C3C",height="50",width="60")
         profileframe.grid(row=6,column=1,rowspan=50,columnspan="90",sticky="N")
         Label(profileframe,text="Profile",font=("Britannic Bold","18"),bg="#E74C3C",width="50").grid(row=1,column=0,columnspan="4")
@@ -297,8 +298,14 @@ def game(phno):
         Entry(profileframe,state="disabled",font=("Berlin Sans FB","14"),textvariable=showlevel,bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=7,column=2,sticky="W")
         tempvar4=file.readline()
         showlevel.set(tempvar4)
+        Label(profileframe,text="Correct Answer given:",font=("Berlin Sans FB","14"),bg="#E74C3C").grid(row=8,column=1,sticky="E")
+        showques=StringVar()
+        Entry(profileframe,state="disabled",font=("Berlin Sans FB","14"),textvariable=showques,bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=8,column=2,sticky="W")
+        showques.set(point//5)
         ed2=Button(profileframe,text="edit",bg="#E74C3C",fg="White",bd=0,command=lambda:edit(2))
         ed2.grid(row=5,column=3,sticky="W")
+        if(i==15):
+            Label(profileframe,text="Congratualation! You have succesfully completed the game.",fg="#F1C40F",font=("Elephant","18"),bg="#E74C3C").grid(row=11,column=1,columnspan=2,sticky="W")
         file.close()
     def logout():
         global exp
@@ -319,6 +326,8 @@ def game(phno):
         point=0
         rajat.destroy()
         main()
+    if(i==15):
+        viewprofile()
     setans= StringVar()
     ansbox=Entry(rajat,text="",width="60",state="disabled",disabledforeground="#17202A",font=("Berlin Sans FB Demi","14"),bd=0,textvariable=setans)
     ansbox.grid(row=5,column=1,columnspan=9,sticky="W",ipady="3",pady="4")
@@ -384,7 +393,7 @@ def game(phno):
     bt2=Button(rajat,text=level1[i]["option"][2],height="4",bg="#5DADE2",fg="#CB4335",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(level1[i]["option"][2]))
     bt3=Button(rajat,text=level1[i]["option"][3],height="4",bg="#5DADE2",fg="#CB4335",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(level1[i]["option"][3]))
     bt4=Button(rajat,text=level1[i]["option"][4],height="4",bg="#5DADE2",fg="#CB4335",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(level1[i]["option"][4]))
-    bt1.grid(row=3,column=1,padx=1,sticky="W",)
+    bt1.grid(row=3,column=1,padx=1,sticky="W")
     bt2.grid(row=3,column=2,padx=1,sticky="W")
     bt3.grid(row=3,column=3,padx=1,sticky="W")
     bt4.grid(row=3,column=4,padx=1,sticky="W")
