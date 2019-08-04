@@ -14,7 +14,7 @@ question9={"option":{1:"the",2:"jumped",3:"the dog",4:"pond",5:"into"},"answer":
 question10={"option":{1:"is",2:"to school",3:"late",4:"Rishu",5:"always"},"answer":"Rishu is always late to school "}
 question11={"option":{1:"who is",2:"strangers",3:"respectful",4:"a person",5:"even",6:"like"},"answer":"even strangers like person who is respectful "}
 question12={"option":{1:"saves us",2:"turns away",3:"a\nsoft\nanswer",4:"anger and",5:"a pitfall",6:"from many"},"answer":"a soft answer turns away anger and saves us from many a pitfall  "}
-question13={"option":{1:"when",2:"best",3:"good\nmanners\ncan",4:"one is",5:"be learnt",6:"young"},"answer":"good amnners can be learnt best when one is young "}
+question13={"option":{1:"when",2:"best",3:"good\nmanners\ncan",4:"one is",5:"be learnt",6:"young"},"answer":"good manners can be learnt best when one is young "}
 question14={"option":{1:"deadly\nweapons",2:"of",3:"science\nhas",4:"warfare",5:"given",6:"man"},"answer":"science has given man deadly weapons of warfare "}
 question15={"option":{1:"armed",2:"which are",3:"miracles",4:"science\nhas",5:"man\nwith\ninventions",6:"not less than"},"answer":"science has armed man with inventions which are not less than miracles "}
 
@@ -59,7 +59,7 @@ def main():
                         messagebox.showerror("Forgot Password","Password must be eight letters long")
                         flag=0
                     if(getpass.get()!=getpass1.get()):
-                        messagebox.showerror("Forgot Password","Cnfirm Password don't match")
+                        messagebox.showerror("Forgot Password","Confirm Password don't match")
                         flag=0
                 if(flag==1):
                     data[0]=getpass.get()+"\n"
@@ -86,7 +86,7 @@ def main():
             Label(forgot,text="Confirm password",font=("Elephant","16"),bg="#E74C3C").grid(row=7,column=1,pady=4,ipady=2,sticky="E")
             getpass1=Entry(forgot,show="*",font=("Arial Black","16"),bd=0,foreground="#17202A")
             getpass1.grid(row=7,pady=4,ipady=2,column=2,sticky="W")
-            chk=Button(forgot,text="Reset Password",font=("Cooper Black","12"),command=check,bd=0,height="2",bg="#F7DC6F",fg="Black")
+            chk=Button(forgot,text="Reset Password",cursor="hand2",font=("Cooper Black","12"),command=check,bd=0,height="2",bg="#F7DC6F",fg="Black")
             chk.grid(row=9,column=2,sticky="W",padx=2,ipadx=3,ipady=2,pady=2)
         flag=1
         user=phone.get()
@@ -127,7 +127,12 @@ def main():
     Label(window,text="Password",fg="Black",bg="#82E0AA",font=("Elephant", 20),justify="left").grid(sticky="E",row=4,column=2)
     password=Entry(window,fg="Black",bd=0,cursor="ibeam",font=("Arial Black","16"),bg="White",show="*",textvariable=lpass)
     password.grid(row=4,column=3,ipadx=2,ipady=2,padx=2,pady=3)
-    Loginbt=Button(window,text="Login",bg="#E74C3C",fg="black",height="2",width="6",cursor="hand2",font=("Yelowtail","15"),relief="flat",activeforeground="white",activebackground="#E74C3C",command=login).grid(row=5,column=3)
+    Loginbt=Button(window,text="Login",bg="#E74C3C",fg="black",width="20",cursor="hand2",font=("Yelowtail","15"),relief="flat",activeforeground="white",activebackground="#E74C3C",command=login).grid(row=5,column=3)
+    Label(window,text="or",fg="Black",bg="#82E0AA",font=("Elephant", 20)).grid(row=6,column=3)
+    def signup1():
+        window.destroy()
+        signup()
+    Button(window,text="Signup",bg="#2ECC71",fg="White",bd=0,cursor="hand2",font=("Britanica","16"),width="20",command=signup1).grid(row=7,column=3)
     window.mainloop()
 
 def signup():
@@ -141,17 +146,20 @@ def signup():
                 num.set("")
                 flag=0
             nam=name.get()
+            nam=list(nam.split())
             email=Email.get()
             pas=password.get()
             if(len(pas)<8):
                 chkpas.set("")
                 messagebox.showerror("Signup", "Password must be 8 character long")
-                flag=0
-                if(" " not in name):
-                    if(str.isalpha(nam)==False):
-                       messagebox.showerror("Signup","Name must be in letters")
-                       namvar.set("")
-                       flag=0
+                flag=0    
+            for j in nam:
+                if(str.isalpha(j)==False):
+                      messagebox.showerror("Signup","Name must be in letters")
+                      namvar.set("")
+                      flag=0
+                else:
+                    name1=" ".join(nam)
             if("@" not in email or ".com" not in email):
                 messagebox.showerror("Signup", "Input a valid Email")
                 em.set("")
@@ -165,7 +173,7 @@ def signup():
                     file=open(phn,"wt")
                     file.write(pas)
                     file.write("\n")
-                    file.write(nam)
+                    file.write(name1)
                     file.write("\n")
                     file.write(email)
                     file.write("\n")
@@ -202,7 +210,12 @@ def signup():
     em= StringVar()
     Email=Entry(sign,bd=0,fg="Black",font=("Arial Black","14"),cursor="ibeam",textvariable=em)
     Email.grid(row=5,column=3,padx=2,pady=2,ipadx=2,ipady=2)
-    signupbt=Button(sign,text="Register",bg="#2ECC71",fg="White",cursor="hand2",bd=0,font=("Britanica","14"),command=register).grid(row=6,column=3,sticky="W",ipadx=2,ipady=2,padx=2,pady=2)
+    signupbt=Button(sign,text="Register",bg="#2ECC71",fg="White",width="25",cursor="hand2",bd=0,font=("Britanica","14"),command=register).grid(row=6,column=2,sticky="E",columnspan=2,ipadx=2,ipady=2,padx=2,pady=2)
+    Label(sign,text="or",fg="Black",bg="#AAB7B8",font=("Elephant", 20)).grid(row=7,column=3)
+    def login1():
+        sign.destroy()
+        main()
+    Button(sign,text="Login",bg="#E74C3C",fg="Black",bd=0,cursor="hand2",font=("Britanica","16"),width="24",command=login1).grid(row=8,column=2,columnspan=2,sticky="E")
     sign.mainloop()
     
 def game(phno):
@@ -227,15 +240,24 @@ def game(phno):
             profileframe.destroy()
         def update(string,i):
             if(i==1):
+                flag=1
                 if(string=="Enter new name"):
                     messagebox.showerror("Jumble Juggle","Please provide input")
-                elif((str.isalpha(string)==False)and(" " not in string)):
-                        messagebox.showerror("Jumble Juggle","Name must be in letters")
+                    flag=0
                 else:
+                    string=list(string.split())
+                    for j in string:
+                        if(str.isalpha(j)==False):
+                            messagebox.showerror("Signup","Name must be in letters")
+                            getans.set("")
+                            flag=0
+                        else:
+                            name1=" ".join(string)
+                if(flag==1):
                     file=open(forward,"rt")
                     data=file.readlines()
                     file.close()
-                    data[1]=string+"\n"
+                    data[1]=name1+"\n"
                     file=open(forward,"w")
                     file.writelines(data)
                     file.close()
@@ -342,9 +364,9 @@ def game(phno):
     file.close()
     usernam="Hello "+str.title(usernam)
     user=Label(rajat,text=usernam,font=("Arial","18"),bg="#F1C40F",fg="#3498DB")
-    user.grid(row=1,column=4,sticky="E")
+    user.grid(row=1,column=4,columnspan=1,sticky="E")
     mb=  Menubutton (rajat,text="▼",bd=0,bg="#F1C40F",cursor="hand2",font=("Arial","14"),activebackground="#F1C40F",activeforeground="#CB4335")
-    mb.grid(row=1,column=5,sticky="NW")
+    mb.grid(row=1,column=5,columnspan=2,sticky="NW")
     mb.menu =  Menu ( mb, tearoff = 0 )
     mb["menu"] =  mb.menu
     mb.menu.add_cascade( label="View Profile",font=("Impact","14"),command=viewprofile)
@@ -354,12 +376,14 @@ def game(phno):
     poin= IntVar()
     poin.set(point)
     setpoint=Entry(rajat,state="disabled",cursor="arrow",bd=0,textvariable=poin,font=("Britannic Bold","18"),disabledforeground="#17202A",disabledbackground="#F1C40F")
-    setpoint.grid(row=1,column=1,sticky="W",ipadx=2,ipady=2,pady=2)
+    setpoint.grid(row=1,column=1,sticky="W",columnspan=2,ipadx=2,ipady=2,pady=2)
     poin.set(point)
     def add(got):
         global exp
+        got=got.replace("\n"," ")
         exp=exp+got
         exp=exp+" "
+        print(exp)
         setans.set(exp)
         forward=phno
     def check():
