@@ -224,15 +224,82 @@ def game(phno):
     global exp
     global gameplay
     global i
+    rajat=tk.Tk()
+    rajat.configure(bg="#F1C40F")
+    rajat.iconbitmap("Game.ico")
+    rajat.geometry("1500x1500")
+    #introduction
+    def intro():
+        def destroy():
+            cross.configure(font="16")
+            frame.destroy()
+        frame=Frame(rajat,bg="#2ECC71")
+        frame.grid(row=2,column=1,rowspan="50",columnspan="90",sticky="N")
+        intro=Label(frame,text="Instruction",font=("Britannic Bold","18"),width="50",bg="#2ECC71")
+        intro.grid(row=1,column=0,rowspan=2)
+        cross=Button(frame,text="X",command=destroy,bg="#2ECC71",font="14",cursor="hand2",bd=0,activeforeground="White",activebackground="#2ECC71")
+        t1=Label(frame,text="1. This game contain many boxes which contain different words written on them.",bg="#2ECC71",height="2",font=("Arial Black","14"))
+        t1.grid(row=3,sticky="W")
+        t2=Label(frame,text="2. You have to click on boxes in such a way that words when joined\ntogether form a meaningful sentece.",bg="#2ECC71",height="2",font=("Arial Black","14"))
+        t2.grid(row=5,sticky="W")
+        t3=Label(frame,text="3. Click on the submit button when you are sure sentence is meaningful.",bg="#2ECC71",height="2",font=("Arial Black","14"))
+        t3.grid(row=7,sticky="W")
+        t4=Label(frame,text="4. If you think you have clicked on wrong box, you can click on\nclear button to reset your answer.",bg="#2ECC71",height="2",font=("Arial Black","14"))
+        t4.grid(row=9,sticky="W")
+        t5=Label(frame,text="5. The game contain three level and 5 question in each level. ",bg="#2ECC71",height="2",font=("Arial Black","14"))
+        t5.grid(row=11,sticky="W")
+        t6=Label(frame,text="6. You will get 5 points on correct answer and 0 if answer is wrong. ",bg="#2ECC71",height="2",font=("Arial Black","14"))
+        t6.grid(row=13,sticky="W")
+        cross.grid(row=1,column=4,ipadx=2,ipady=2)
     if(gameplay==0):
         file=open(forward,"rt")
         data=file.readlines()
         i=int(data[4])
         point=int(data[3][:-1])
-    rajat=tk.Tk()
-    rajat.configure(bg="#F1C40F")
-    rajat.iconbitmap("Game.ico")
-    rajat.geometry("1500x1500")
+    #change password
+    def changepass():
+            def check():
+                flag=1
+                file=open(forward,"rt")
+                data=file.readlines()
+                file.close()
+                if(getcurrpass.get()!=data[0][:-1]):
+                     messagebox.showerror("Change Password","Current password don't match")
+                     flag=0
+                if(getpass.get()==data[0][:-1]):
+                    messagebox.showerror("Change Password","New password chould be different from old password")
+                    flag=0
+                if(len(getpass.get())<8):
+                        messagebox.showerror("Change Password","Password must be eight letters long")
+                        flag=0
+                if(getpass.get()!=getpass1.get()):
+                        messagebox.showerror("Change Password","Confirm Password don't match")
+                        flag=0
+                if(flag==1):
+                    data[0]=getpass.get()+"\n"
+                    messagebox.showinfo("Forgot Password","Password reset successful")
+                    file=open(forward,"wt")
+                    file.writelines(data)
+                    file.close()
+                    change.destroy()
+            def hide():
+                change.destroy()
+            change=Frame(rajat,bg="#E74C3C",height="50",width="60")
+            change.grid(row=3,column=2,rowspan=50,columnspan="90",sticky="N")
+            Label(change,text="Change Password",font=("Britannic Bold","18"),bg="#E74C3C",width="50").grid(row=1,column=0,columnspan="4")
+            cut=Button(change,text="X",cursor="hand2",command=hide,bg="#E74C3C",font=("Arial Black","12"),bd=0,highlightcolor="Red")
+            cut.grid(row=1,column=4,sticky="E")
+            Label(change,text="Enter current password",font=("Elephant","14"),bg="#E74C3C").grid(row=3,column=1,pady=4,ipady=2,sticky="E")
+            getcurrpass=Entry(change,show="*",font=("Arial Black","14"),bd=0,foreground="#17202A")
+            getcurrpass.grid(row=3,column=2,pady=4,ipady=2,sticky="W")
+            Label(change,text="Enter new password",font=("Elephant","14"),bg="#E74C3C").grid(row=5,column=1,pady=4,ipady=2,sticky="E")
+            getpass=Entry(change,show="*",font=("Arial Black","14"),bd=0,foreground="#17202A")
+            getpass.grid(row=5,column=2,pady=4,ipady=2,sticky="W")
+            Label(change,text="Confirm password",font=("Elephant","14"),bg="#E74C3C").grid(row=7,column=1,pady=4,ipady=2,sticky="E")
+            getpass1=Entry(change,show="*",font=("Arial Black","14"),bd=0,foreground="#17202A")
+            getpass1.grid(row=7,pady=4,ipady=2,column=2,sticky="W")
+            chk=Button(change,text="Reset Password",cursor="hand2",font=("Arial Black","12"),command=check,bd=0,height="2",bg="#F7DC6F",fg="Black")
+            chk.grid(row=9,column=2,sticky="W",padx=2,ipadx=3,ipady=2,pady=2)
     #view profile
     def viewprofile():
         global i
@@ -370,6 +437,8 @@ def game(phno):
     mb.menu =  Menu ( mb, tearoff = 0 )
     mb["menu"] =  mb.menu
     mb.menu.add_cascade( label="View Profile",font=("Impact","14"),command=viewprofile)
+    mb.menu.add_cascade( label="View Instruction",font=("Impact","14"),command=intro)
+    mb.menu.add_cascade( label="Change Password",font=("Impact","14"),command=changepass)
     mb.menu.add_cascade( label="Logout",font=("Impact","14"),command=logout)
     pointbox=Label(rajat,text="Points:",font=("Britannic Bold","18"),bg="#F1C40F")
     pointbox.grid(row=1,column=0,sticky="E")
@@ -439,27 +508,7 @@ def game(phno):
     clr.grid(row=10,column=3,sticky="W",padx=2,ipadx=3,ipady=2)
     #from here we are making instruction
     if(gameplay==0):
-        def destroy():
-            cross.configure(font="16")
-            frame.destroy()
-        frame=Frame(rajat,bg="#2ECC71")
-        frame.grid(row=2,column=1,rowspan="50",columnspan="90",sticky="N")
-        intro=Label(frame,text="Instruction",font=("Britannic Bold","18"),width="50",bg="#2ECC71")
-        intro.grid(row=1,column=0,rowspan=2)
-        cross=Button(frame,text="X",command=destroy,bg="#2ECC71",font="14",cursor="hand2",bd=0,activeforeground="White",activebackground="#2ECC71")
-        t1=Label(frame,text="1. This game contain many boxes which contain different words written on them.",bg="#2ECC71",height="2",font=("Arial Black","14"))
-        t1.grid(row=3,sticky="W")
-        t2=Label(frame,text="2. You have to click on boxes in such a way that words when joined\ntogether form a meaningful sentece.",bg="#2ECC71",height="2",font=("Arial Black","14"))
-        t2.grid(row=5,sticky="W")
-        t3=Label(frame,text="3. Click on the submit button when you are sure sentence is meaningful.",bg="#2ECC71",height="2",font=("Arial Black","14"))
-        t3.grid(row=7,sticky="W")
-        t4=Label(frame,text="4. If you think you have clicked on wrong box, you can click on\nclear button to reset your answer.",bg="#2ECC71",height="2",font=("Arial Black","14"))
-        t4.grid(row=9,sticky="W")
-        t5=Label(frame,text="5. The game contain three level and 5 question in each level. ",bg="#2ECC71",height="2",font=("Arial Black","14"))
-        t5.grid(row=11,sticky="W")
-        t6=Label(frame,text="6. You will get 5 points on correct answer and 0 if answer is wrong. ",bg="#2ECC71",height="2",font=("Arial Black","14"))
-        t6.grid(row=13,sticky="W")
-        cross.grid(row=1,column=4,ipadx=2,ipady=2)
+        intro()
     rajat.mainloop()
     
 main()
