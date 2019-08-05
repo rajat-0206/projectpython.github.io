@@ -300,6 +300,50 @@ def game(phno):
             getpass1.grid(row=7,pady=4,ipady=2,column=2,sticky="W")
             chk=Button(change,text="Reset Password",cursor="hand2",font=("Arial Black","12"),command=check,bd=0,height="2",bg="#F7DC6F",fg="Black")
             chk.grid(row=9,column=2,sticky="W",padx=2,ipadx=3,ipady=2,pady=2)
+    #view responce
+    def responce():
+        global i
+        global point
+        rowlabel=3
+        rowentry=4
+        filename=forward+"responce"
+        file=open(filename,"rt")
+        userans=file.readlines()
+        file.close()
+        counter=0
+        def hideframe():
+            responceframe.destroy()
+        responceframe=Frame(rajat,bg="#2ECC71",height="50",width="60")
+        responceframe.grid(row=3,column=2,rowspan=50,columnspan="90",sticky="N")
+        Label(responceframe,text="Detailed View",font=("Britannic Bold","14"),bg="#2ECC71",width="50").grid(row=1,column=0,columnspan="4")
+        Label(responceframe,text="Points",font=("Arial Balck","14"),bg="#2ECC71").grid(row=2,column=1,sticky="E")
+        crtpoint=StringVar()
+        Entry(responceframe,font=("Arial Black","18"),bd=0,state="disabled",disabledbackground="#2ECC71",disabledforeground="Black",textvariable=crtpoint).grid(row=2,column=2,sticky="W")
+        crtpoint.set(point)
+        Label(responceframe,text="Correct Answer Given",font=("Arial Balck","14"),bg="#2ECC71").grid(row=2,column=3)
+        crtans=StringVar()
+        Entry(responceframe,font=("Arial Black","18"),bd=0,disabledforeground="Black",state="disabled",disabledbackground="#2ECC71",textvariable=crtans).grid(row=2,column=4)
+        crtans.set(point//i)
+        cut=Button(responceframe,text="X",cursor="hand2",command=hideframe,bg="#2ECC71",font=("Arial Black","12"),bd=0,highlightcolor="Red")
+        cut.grid(row=1,column=4,sticky="E")
+        while counter<i:
+            Label(responceframe,text="Your responce",font=("Elephant","14"),bg="#2ECC71").grid(row=rowlabel,column=1,pady=4,ipady=2,sticky="E")
+            setresponce=StringVar()
+            userresponce=Entry(responceframe,font=("Arial Black","14"),state="disabled",bd=0,foreground="#17202A",width="60",textvariable=setresponce)
+            setresponce.set(userans[counter])
+            userresponce.grid(row=rowlabel,column=2,pady=4,ipady=2,sticky="W",columnspan="4")
+            Label(responceframe,text="Correct answer",font=("Elephant","14"),bg="#2ECC71").grid(row=rowentry,column=1,pady=4,ipady=2,sticky="E")
+            setanswer=StringVar()
+            if(userans[counter][:-1]==level1[counter]["answer"]):
+                color="#27AE60"
+            else:
+                color="#E74C3C"
+            correctanswer=Entry(responceframe,font=("Arial Black","14"),state="disabled",bd=0,disabledforeground=color,width="60",textvariable=setanswer)
+            setanswer.set(level1[counter]["answer"])
+            correctanswer.grid(row=rowentry,column=2,pady=4,ipady=2,sticky="W",columnspan="4")
+            rowlabel+=2
+            rowentry+=2
+            counter+=1
     #view profile
     def viewprofile():
         global i
@@ -395,6 +439,8 @@ def game(phno):
         showques=StringVar()
         Entry(profileframe,state="disabled",font=("Berlin Sans FB","14"),textvariable=showques,bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=8,column=2,sticky="W")
         showques.set(point//5)
+        ed3=Button(profileframe,text="View Detailed Information",bg="#E74C3C",cursor="hand2",fg="White",bd=0,command=lambda:responce())
+        ed3.grid(row=8,column=3,sticky="W")
         ed2=Button(profileframe,text="edit",bg="#E74C3C",cursor="hand2",fg="White",bd=0,command=lambda:edit(2))
         ed2.grid(row=5,column=3,sticky="W")
         if(i==15):
@@ -460,6 +506,11 @@ def game(phno):
         global exp
         global point
         global i
+        filename=forward+"responce"
+        file=open(filename,"at")
+        file.write(exp)
+        file.write("\n")
+        file.close()
         if(exp==level1[i]["answer"]):
             exp=""
             setans.set(exp)
@@ -506,6 +557,10 @@ def game(phno):
     ans.grid(row=5,column=0,sticky="E")
     clr=Button(rajat,text="Clear",font=("Cooper Black","12"),cursor="hand2",command=clear,bd=0,height="2",bg="#E74C3C",fg="White")
     clr.grid(row=10,column=3,sticky="W",padx=2,ipadx=3,ipady=2)
+    '''responce=StringVar()
+    message=Message(rajat,textvariable=responce,bg="Red",fg="Black")
+    responce.set("Waiting For your responce...")
+    message.grid(row=11,column=3,columnspan=4)'''
     #from here we are making instruction
     if(gameplay==0):
         intro()
