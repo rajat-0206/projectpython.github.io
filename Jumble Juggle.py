@@ -41,7 +41,7 @@ gameplay=0
 def main():
     window=tk.Tk()
     window.title("Jumple Juggle")
-    window.geometry('900x900')
+    window.geometry('900x500')
     window.configure(background="#82E0AA")  
     window.iconbitmap("Game.ico")
     def login():
@@ -52,18 +52,18 @@ def main():
                 data=file.readlines()
                 file.close()
                 if(testem.get()!=data[2][:-1]):
-                    messagebox.showerror("Forgot Password","The Email you entered did not matched with our records")
+                    messagebox.showerror("Forgot Password","The email-ID you entered didn't matched with any of our records.")
                     flag=0
                 else:
                     if(len(getpass.get())<8):
-                        messagebox.showerror("Forgot Password","Password must be eight letters long")
+                        messagebox.showerror("Forgot Password","Password should be atleast eight(8) letters long")
                         flag=0
                     if(getpass.get()!=getpass1.get()):
-                        messagebox.showerror("Forgot Password","Confirm Password don't match")
+                        messagebox.showerror("Forgot Password","Confirmation password doesn't match")
                         flag=0
                 if(flag==1):
                     data[0]=getpass.get()+"\n"
-                    messagebox.showinfo("Forgot Password","Password reset successful")
+                    messagebox.showinfo("Forgot Password","Password reset successful.")
                     file=open(user,"wt")
                     file.writelines(data)
                     file.close()
@@ -107,32 +107,32 @@ def main():
                     window.destroy()
                     game(user)
                 else:
-                    msg=messagebox.askretrycancel("Login","Wrong Password")
+                    msg=messagebox.askretrycancel("Login","Wrong Password!")
                     if(msg==False):
                         forgotpass()
                     lpass.set("")
             else:
-                msg=messagebox.askquestion("Login","This number is not registered.Do you want to signup?",icon='warning')
+                msg=messagebox.askquestion("Login","This number is not registered. You may register this by signing up. Sign up?",icon='warning')
                 if(msg=="yes"):
                     window.destroy()
                     signup()
     Frame(window,bg="#82E0AA",height="900",width="160").grid(row=0,column=0,rowspan=50)
-    Label(window,text="LOGIN",fg="#E74C3C",bg="#82E0AA",font=("LOGIN", 48),justify="center").grid(row=1,column=1,columnspan=4)
-    Label(window,text="Phone Number",fg="Black",bg="#82E0AA",font=("Elephant", 20),justify="left").grid(sticky="E",row=3,column=2)
+    Label(window,text="Log In",fg="#0000aa",bg="#82E0AA",font=("Microsoft YaHei Light", 48),justify="center").grid(row=2,column=2,columnspan=4)
+    Label(window,text="Phone Number ",fg="Black",bg="#82E0AA",font=("Elephant", 15),justify="left").grid(sticky="E",row=3,column=2)
     loginph= StringVar()
-    phone=Entry(window,fg="Black",bd=0,font=("Arial Black","16"),cursor="ibeam",bg="white",textvariable=loginph)
+    phone=Entry(window,fg="Black",bd=0,font=("Arial","19"),cursor="ibeam",border="5",bg="#dddddd",textvariable=loginph)
     phone.focus
     phone.grid(row=3,column=3,ipadx=2,ipady=2,padx=2,pady=3)
     lpass= StringVar()
-    Label(window,text="Password",fg="Black",bg="#82E0AA",font=("Elephant", 20),justify="left").grid(sticky="E",row=4,column=2)
-    password=Entry(window,fg="Black",bd=0,cursor="ibeam",font=("Arial Black","16"),bg="White",show="*",textvariable=lpass)
+    Label(window,text="Password ",fg="Black",bg="#82E0AA",font=("Elephant", 15),justify="left").grid(sticky="E",row=4,column=2)
+    password=Entry(window,fg="Black",bd=0,cursor="ibeam",font=("Arial Black","16"),border="5",bg="White",show="*",textvariable=lpass)
     password.grid(row=4,column=3,ipadx=2,ipady=2,padx=2,pady=3)
-    Loginbt=Button(window,text="Login",bg="#E74C3C",fg="black",width="20",cursor="hand2",font=("Yelowtail","15"),relief="flat",activeforeground="white",activebackground="#E74C3C",command=login).grid(row=5,column=3)
-    Label(window,text="or",fg="Black",bg="#82E0AA",font=("Elephant", 20)).grid(row=6,column=3)
+    Loginbt=Button(window,text="Login",bg="#E74C3C",fg="white",width="10", height="2",cursor="hand2",font=("Yelowtail","15"),relief="flat",activeforeground="white",activebackground="#E74C3C",command=login).grid(row=5,column=3)
+    Label(window,text="OR",fg="Black",bg="#82E0AA",font=("Comic Sans MS", 20)).grid(row=6,column=3)
     def signup1():
         window.destroy()
         signup()
-    Button(window,text="Signup",bg="#2ECC71",fg="White",bd=0,cursor="hand2",font=("Britanica","16"),width="20",command=signup1).grid(row=7,column=3)
+    Button(window,text="Sign Up",bg="#2ECC71",fg="White",bd=0,cursor="hand2",font=("Britanica","16"),width="10",height="3",command=signup1).grid(row=7,column=3)
     window.mainloop()
 
 def signup():
@@ -142,7 +142,7 @@ def signup():
             flag=1
             phn=phone.get()
             if(str.isdigit(phone.get())==False or len(phone.get())!=10):
-                messagebox.showerror("Signup", "Input a valid number")
+                messagebox.showerror("Signup", "Input a valid number!")
                 num.set("")
                 flag=0
             nam=name.get()
@@ -151,11 +151,11 @@ def signup():
             pas=password.get()
             if(len(pas)<8):
                 chkpas.set("")
-                messagebox.showerror("Signup", "Password must be 8 character long")
+                messagebox.showerror("Signup", "Password should be atleast 8 characters long")
                 flag=0    
             for j in nam:
                 if(str.isalpha(j)==False):
-                      messagebox.showerror("Signup","Name must be in letters")
+                      messagebox.showerror("Signup","Name must be in valid letters")
                       namvar.set("")
                       flag=0
                 else:
@@ -192,7 +192,7 @@ def signup():
     sign.geometry("900x900")
     sign.configure(background="#AAB7B8")
     Frame(sign,bg="#AAB7B8",height="900",width="160").grid(row=1,column=1,rowspan=50)
-    Label(sign,text="REGISTER",fg="#9B59B6",bg="#AAB7B8",font=("REGISTER", 48)).grid(row=1,column=2,columnspan=4)
+    Label(sign,text="Registration",fg="#9B59B6",bg="#AAB7B8",font=("REGISTER", 35)).grid(row=1,column=2,columnspan=4)
     num= StringVar()
     Label(sign,text="Phone Number",fg="Black",bg="#AAB7B8",font=("Phone Number", 20),justify="left").grid(sticky="E",row=2,column=2)
     phone=Entry(sign,bd=0,fg="Black",font=("Arial Black","14"),cursor="ibeam",textvariable=num)
@@ -235,20 +235,20 @@ def game(phno):
             frame.destroy()
         frame=Frame(rajat,bg="#2ECC71")
         frame.grid(row=2,column=1,rowspan="50",columnspan="90",sticky="N")
-        intro=Label(frame,text="Instruction",font=("Britannic Bold","18"),width="50",bg="#2ECC71")
+        intro=Label(frame,text="Instructions",font=("Britannic Bold","20"),width="50",bg="#2ECC71")
         intro.grid(row=1,column=0,rowspan=2)
         cross=Button(frame,text="X",command=destroy,bg="#2ECC71",font="14",cursor="hand2",bd=0,activeforeground="White",activebackground="#2ECC71")
-        t1=Label(frame,text="1. This game contain many boxes which contain different words written on them.",bg="#2ECC71",height="2",font=("Arial Black","14"))
+        t1=Label(frame,text="> This game contains many boxes which contain different words written on them.",bg="#2ECC71",height="2",font=("Microsoft YaHei UI","14"))
         t1.grid(row=3,sticky="W")
-        t2=Label(frame,text="2. You have to click on boxes in such a way that words when joined\ntogether form a meaningful sentece.",bg="#2ECC71",height="2",font=("Arial Black","14"))
+        t2=Label(frame,text="> You have to click on boxes sequentially in such a way that words when joined\ntogether, form a meaningful sentence.",bg="#2ECC71",height="2",font=("Arial Black","14"))
         t2.grid(row=5,sticky="W")
-        t3=Label(frame,text="3. Click on the submit button when you are sure sentence is meaningful.",bg="#2ECC71",height="2",font=("Arial Black","14"))
+        t3=Label(frame,text="> Click 'submit' when you are sure your sentence is meaningful.",bg="#2ECC71",height="2",font=("Arial Black","14"))
         t3.grid(row=7,sticky="W")
-        t4=Label(frame,text="4. If you think you have clicked on wrong box, you can click on\nclear button to reset your answer.",bg="#2ECC71",height="2",font=("Arial Black","14"))
+        t4=Label(frame,text="> If you think you have clicked on a wrong box, you can click on\n'clear' to reset your answer.",bg="#2ECC71",height="2",font=("Arial Black","14"))
         t4.grid(row=9,sticky="W")
-        t5=Label(frame,text="5. The game contain three level and 5 question in each level. ",bg="#2ECC71",height="2",font=("Arial Black","14"))
+        t5=Label(frame,text="> The game contains three levels and 5 questions in each level. ",bg="#2ECC71",height="2",font=("Arial Black","14"))
         t5.grid(row=11,sticky="W")
-        t6=Label(frame,text="6. You will get 5 points on correct answer and 0 if answer is wrong. ",bg="#2ECC71",height="2",font=("Arial Black","14"))
+        t6=Label(frame,text="> You will get +5 points on correct answer, and 0 if the answer is wrong. ",bg="#2ECC71",height="2",font=("Arial Black","14"))
         t6.grid(row=13,sticky="W")
         cross.grid(row=1,column=4,ipadx=2,ipady=2)
     if(gameplay==0):
@@ -264,20 +264,20 @@ def game(phno):
                 data=file.readlines()
                 file.close()
                 if(getcurrpass.get()!=data[0][:-1]):
-                     messagebox.showerror("Change Password","Current password don't match")
+                     messagebox.showerror("Change Password","Current password doesn't match.")
                      flag=0
                 if(getpass.get()==data[0][:-1]):
-                    messagebox.showerror("Change Password","New password chould be different from old password")
+                    messagebox.showerror("Change Password","New password should be different from old password!")
                     flag=0
                 if(len(getpass.get())<8):
-                        messagebox.showerror("Change Password","Password must be eight letters long")
+                        messagebox.showerror("Change Password","Password should be at least eight letters long.")
                         flag=0
                 if(getpass.get()!=getpass1.get()):
-                        messagebox.showerror("Change Password","Confirm Password don't match")
+                        messagebox.showerror("Change Password","Confirmation password doesn't match.")
                         flag=0
                 if(flag==1):
                     data[0]=getpass.get()+"\n"
-                    messagebox.showinfo("Forgot Password","Password reset successful")
+                    messagebox.showinfo("Forgot Password","Password reset successful.")
                     file=open(forward,"wt")
                     file.writelines(data)
                     file.close()
@@ -444,7 +444,7 @@ def game(phno):
         ed2=Button(profileframe,text="edit",bg="#E74C3C",cursor="hand2",fg="White",bd=0,command=lambda:edit(2))
         ed2.grid(row=5,column=3,sticky="W")
         if(i==15):
-            Label(profileframe,text="Congratualation! You have succesfully completed the game.",fg="#F1C40F",font=("Elephant","18"),bg="#E74C3C").grid(row=11,column=1,columnspan=2,sticky="W")
+            Label(profileframe,text="Congratulations! You have successfully completed the game.",fg="#F1C40F",font=("Elephant","18"),bg="#E74C3C").grid(row=11,column=1,columnspan=2,sticky="W")
         file.close()
     def logout():
         global exp
