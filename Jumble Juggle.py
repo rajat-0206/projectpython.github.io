@@ -120,19 +120,16 @@ def main():
     Label(window,text="LOGIN",fg="#E74C3C",bg="#82E0AA",font=("LOGIN", 48),justify="center").grid(row=1,column=1,columnspan=4)
     Label(window,text="Phone Number",fg="Black",bg="#82E0AA",font=("Elephant", 20),justify="left").grid(sticky="E",row=3,column=2)
     loginph= StringVar()
-<<<<<<< HEAD
     phone=Entry(window,fg="Black",bd=0,font=("Arial","19"),cursor="ibeam",textvariable=loginph)
     phone.focus
     phone.grid(row=3,column=3,ipadx=2,ipady=2,padx=2,pady=3)
     lpass= StringVar()
     Label(window,text="Password ",fg="Black",bg="#82E0AA",font=("Elephant", 15),justify="left").grid(sticky="E",row=4,column=2)
-=======
     phone=Entry(window,fg="Black",bd=0,font=("Arial Black","16"),cursor="ibeam",bg="white",textvariable=loginph)
     phone.focus
     phone.grid(row=3,column=3,ipadx=2,ipady=2,padx=2,pady=3)
     lpass= StringVar()
     Label(window,text="Password",fg="Black",bg="#82E0AA",font=("Elephant", 20),justify="left").grid(sticky="E",row=4,column=2)
->>>>>>> f30e94d821682acae3a5eff25e6c0b5b83c3742b
     password=Entry(window,fg="Black",bd=0,cursor="ibeam",font=("Arial Black","16"),bg="White",show="*",textvariable=lpass)
     password.grid(row=4,column=3,ipadx=2,ipady=2,padx=2,pady=3)
     Loginbt=Button(window,text="Login",bg="#E74C3C",fg="black",width="20",cursor="hand2",font=("Yelowtail","15"),relief="flat",activeforeground="white",activebackground="#E74C3C",command=login).grid(row=5,column=3)
@@ -246,11 +243,8 @@ def game(phno):
         intro=Label(frame,text="Instruction",font=("Britannic Bold","18"),width="50",bg="#2ECC71")
         intro.grid(row=1,column=0,rowspan=2)
         cross=Button(frame,text="X",command=destroy,bg="#2ECC71",font="14",cursor="hand2",bd=0,activeforeground="White",activebackground="#2ECC71")
-<<<<<<< HEAD
         t1=Label(frame,text="> This game contains many boxes which contain different words written on them.",bg="#2ECC71",height="2",font=("Arial Black","14"))
-=======
         t1=Label(frame,text="1. This game contain many boxes which contain different words written on them.",bg="#2ECC71",height="2",font=("Arial Black","14"))
->>>>>>> f30e94d821682acae3a5eff25e6c0b5b83c3742b
         t1.grid(row=3,sticky="W")
         t2=Label(frame,text="2. You have to click on boxes in such a way that words when joined\ntogether form a meaningful sentece.",bg="#2ECC71",height="2",font=("Arial Black","14"))
         t2.grid(row=5,sticky="W")
