@@ -323,7 +323,7 @@ def game(phno):
         Label(responceframe,text="Correct Answer Given",font=("Arial Balck","14"),bg="#2ECC71").grid(row=2,column=3)
         crtans=StringVar()
         Entry(responceframe,font=("Arial Black","18"),bd=0,disabledforeground="Black",state="disabled",disabledbackground="#2ECC71",textvariable=crtans).grid(row=2,column=4)
-        crtans.set(point//i)
+        crtans.set(point//5)
         cut=Button(responceframe,text="X",cursor="hand2",command=hideframe,bg="#2ECC71",font=("Arial Black","12"),bd=0,highlightcolor="Red")
         cut.grid(row=1,column=4,sticky="E")
         while counter<i:
