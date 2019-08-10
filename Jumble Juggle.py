@@ -12,7 +12,7 @@ question7={"option":{1:"love",2:"of others",3:"good\nmanners",4:"win the",5:"and
 question8={"option":{1:"the",2:"the",3:"kept",4:"rail safe",5:"sleeper"},"answer":"the sleeper kept the rail safe "}
 question9={"option":{1:"the",2:"jumped",3:"the dog",4:"pond",5:"into"},"answer":"the dog jumped into the pond "}
 question10={"option":{1:"is",2:"to school",3:"late",4:"Rishu",5:"always"},"answer":"Rishu is always late to school "}
-question11={"option":{1:"who is",2:"strangers",3:"respectful",4:"a person",5:"even",6:"like"},"answer":"even strangers like person who is respectful "}
+question11={"option":{1:"who is",2:"strangers",3:"respectful",4:"a person",5:"even",6:"like"},"answer":"even strangers like a person who is respectful "}
 question12={"option":{1:"saves us",2:"turns away",3:"a\nsoft\nanswer",4:"anger and",5:"a pitfall",6:"from many"},"answer":"a soft answer turns away anger and saves us from many a pitfall  "}
 question13={"option":{1:"when",2:"best",3:"good\nmanners\ncan",4:"one is",5:"be learnt",6:"young"},"answer":"good manners can be learnt best when one is young "}
 question14={"option":{1:"deadly\nweapons",2:"of",3:"science\nhas",4:"warfare",5:"given",6:"man"},"answer":"science has given man deadly weapons of warfare "}
@@ -120,12 +120,12 @@ def main():
     Label(window,text="Log In",fg="#0000aa",bg="#82E0AA",font=("Microsoft YaHei Light", 48),justify="center").grid(row=2,column=2,columnspan=4)
     Label(window,text="Phone Number ",fg="Black",bg="#82E0AA",font=("Elephant", 15),justify="left").grid(sticky="E",row=3,column=2)
     loginph= StringVar()
-    phone=Entry(window,fg="Black",bd=0,font=("Arial","19"),cursor="ibeam",border="5",bg="#dddddd",textvariable=loginph)
+    phone=Entry(window,fg="Black",bd=0,font=("Arial","19"),cursor="ibeam",textvariable=loginph)
     phone.focus
     phone.grid(row=3,column=3,ipadx=2,ipady=2,padx=2,pady=3)
     lpass= StringVar()
     Label(window,text="Password ",fg="Black",bg="#82E0AA",font=("Elephant", 15),justify="left").grid(sticky="E",row=4,column=2)
-    password=Entry(window,fg="Black",bd=0,cursor="ibeam",font=("Arial Black","16"),border="5",bg="White",show="*",textvariable=lpass)
+    password=Entry(window,fg="Black",bd=0,cursor="ibeam",font=("Arial Black","16"),bg="White",show="*",textvariable=lpass)
     password.grid(row=4,column=3,ipadx=2,ipady=2,padx=2,pady=3)
     Loginbt=Button(window,text="Login",bg="#E74C3C",fg="white",width="10", height="2",cursor="hand2",font=("Yelowtail","15"),relief="flat",activeforeground="white",activebackground="#E74C3C",command=login).grid(row=5,column=3)
     Label(window,text="OR",fg="Black",bg="#82E0AA",font=("Comic Sans MS", 20)).grid(row=6,column=3)
@@ -238,7 +238,7 @@ def game(phno):
         intro=Label(frame,text="Instructions",font=("Britannic Bold","20"),width="50",bg="#2ECC71")
         intro.grid(row=1,column=0,rowspan=2)
         cross=Button(frame,text="X",command=destroy,bg="#2ECC71",font="14",cursor="hand2",bd=0,activeforeground="White",activebackground="#2ECC71")
-        t1=Label(frame,text="> This game contains many boxes which contain different words written on them.",bg="#2ECC71",height="2",font=("Microsoft YaHei UI","14"))
+        t1=Label(frame,text="> This game contains many boxes which contain different words written on them.",bg="#2ECC71",height="2",font=("Arial Black","14"))
         t1.grid(row=3,sticky="W")
         t2=Label(frame,text="> You have to click on boxes sequentially in such a way that words when joined\ntogether, form a meaningful sentence.",bg="#2ECC71",height="2",font=("Arial Black","14"))
         t2.grid(row=5,sticky="W")
@@ -304,8 +304,8 @@ def game(phno):
     def responce():
         global i
         global point
-        rowlabel=3
-        rowentry=4
+        rowlabel=4
+        rowentry=5
         filename=forward+"responce"
         file=open(filename,"rt")
         userans=file.readlines()
@@ -313,9 +313,10 @@ def game(phno):
         counter=0
         def hideframe():
             responceframe.destroy()
-        responceframe=Frame(rajat,bg="#2ECC71",height="50",width="60")
+        responceframe=Frame(rajat,bg="#2ECC71",height="50",width="50")
         responceframe.grid(row=3,column=2,rowspan=50,columnspan="90",sticky="N")
-        Label(responceframe,text="Detailed View",font=("Britannic Bold","14"),bg="#2ECC71",width="50").grid(row=1,column=0,columnspan="4")
+        Label(responceframe,text="NOTE:Only last 8 responce will be shown",font=("Arial Balck","12"),bg="#2ECC71").grid(row=3,column=2,sticky="E")
+        Label(responceframe,text="Detailed View",font=("Britannic Bold","18"),bg="#2ECC71",width="50").grid(row=1,column=0,columnspan="4")
         Label(responceframe,text="Points",font=("Arial Balck","14"),bg="#2ECC71").grid(row=2,column=1,sticky="E")
         crtpoint=StringVar()
         Entry(responceframe,font=("Arial Black","18"),bd=0,state="disabled",disabledbackground="#2ECC71",disabledforeground="Black",textvariable=crtpoint).grid(row=2,column=2,sticky="W")
@@ -343,6 +344,9 @@ def game(phno):
             correctanswer.grid(row=rowentry,column=2,pady=4,ipady=2,sticky="W",columnspan="4")
             rowlabel+=2
             rowentry+=2
+            if(rowlabel==14):
+                rowlabel=4
+                rowentry=5
             counter+=1
     #view profile
     def viewprofile():
@@ -446,6 +450,22 @@ def game(phno):
         if(i==15):
             Label(profileframe,text="Congratulations! You have successfully completed the game.",fg="#F1C40F",font=("Elephant","18"),bg="#E74C3C").grid(row=11,column=1,columnspan=2,sticky="W")
         file.close()
+    # Restart game
+    def restart():
+        global point
+        global i
+        point=0
+        i=0
+        file=open(forward,"rt")
+        data=file.readlines()
+        file.close()
+        data[3]=str(point)+"\n"
+        data[4]=str(i)
+        file=open(forward,"wt")
+        file.writelines(data)
+        file.close()
+        rajat.destroy()
+        game(forward)
     def logout():
         global exp
         global point
@@ -485,6 +505,7 @@ def game(phno):
     mb.menu.add_cascade( label="View Profile",font=("Impact","14"),command=viewprofile)
     mb.menu.add_cascade( label="View Instruction",font=("Impact","14"),command=intro)
     mb.menu.add_cascade( label="Change Password",font=("Impact","14"),command=changepass)
+    mb.menu.add_cascade( label="Restart Game",font=("Impact","14"),command=restart)
     mb.menu.add_cascade( label="Logout",font=("Impact","14"),command=logout)
     pointbox=Label(rajat,text="Points:",font=("Britannic Bold","18"),bg="#F1C40F")
     pointbox.grid(row=1,column=0,sticky="E")
