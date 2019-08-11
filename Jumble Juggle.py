@@ -1,7 +1,9 @@
-import tkinter as tk
+import tkinter as tk       #tThe module for GUi
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox     #The module for Pop-up Box
 import os  
+
+# Defining all question with options and answers
 question1={"option":{1:"twice",2:"a day",3:"brush your",4:"teeth"},"answer":"brush your teeth twice a day "}
 question2={"option":{1:"a story",2:"narrating",3:"tomorrow",4:"I will be"},"answer":"I will be narrating a story tomorrow "}
 question3={"option":{1:"pray to",2:"we should",3:"daily",4:"god"},"answer":"we should pray to god daily "}
@@ -18,6 +20,7 @@ question13={"option":{1:"when",2:"best",3:"good\nmanners\ncan",4:"one is",5:"be 
 question14={"option":{1:"deadly\nweapons",2:"of",3:"science\nhas",4:"warfare",5:"given",6:"man"},"answer":"science has given man deadly weapons of warfare "}
 question15={"option":{1:"armed",2:"which are",3:"miracles",4:"science\nhas",5:"man\nwith\ninventions",6:"not less than"},"answer":"science has armed man with inventions which are not less than miracles "}
 
+#creating a list and insrting all question in it
 level1=[]
 level1.insert(0,question1)
 level1.insert(1,question2)
@@ -34,10 +37,14 @@ level1.insert(11,question12)
 level1.insert(12,question13)
 level1.insert(13,question14)
 level1.insert(14,question15)
-exp=""
-i=0
-point=0
-gameplay=0
+
+
+exp=""   #The variable to hold user answer
+i=0     #The variable to hold question number
+point=0 #Variable of points
+gameplay=0   # The variable telling gameplay
+
+#The login Function
 def main():
     window=tk.Tk()
     window.title("Jumple Juggle")
@@ -140,6 +147,7 @@ def main():
     Button(window,text="Signup",bg="#2ECC71",fg="White",bd=0,cursor="hand2",font=("Britanica","16"),width="20",command=signup1).grid(row=7,column=3)
     window.mainloop()
 
+#The signup function
 def signup():
     global point
     global i
@@ -222,7 +230,9 @@ def signup():
         main()
     Button(sign,text="Login",bg="#E74C3C",fg="Black",bd=0,cursor="hand2",font=("Britanica","16"),width="24",command=login1).grid(row=8,column=2,columnspan=2,sticky="E")
     sign.mainloop()
-    
+
+
+#the game function
 def game(phno):
     forward=phno
     global point
@@ -233,7 +243,9 @@ def game(phno):
     rajat.configure(bg="#F1C40F")
     rajat.iconbitmap("Game.ico")
     rajat.geometry("1500x1500")
-    #introduction
+    
+    #function to give introduction
+    
     def intro():
         def destroy():
             cross.configure(font="16")
@@ -262,7 +274,9 @@ def game(phno):
         data=file.readlines()
         i=int(data[4])
         point=int(data[3][:-1])
-    #change password
+        
+    #function to change password
+    
     def changepass():
             def check():
                 flag=1
@@ -306,55 +320,59 @@ def game(phno):
             getpass1.grid(row=7,pady=4,ipady=2,column=2,sticky="W")
             chk=Button(change,text="Reset Password",cursor="hand2",font=("Arial Black","12"),command=check,bd=0,height="2",bg="#F7DC6F",fg="Black")
             chk.grid(row=9,column=2,sticky="W",padx=2,ipadx=3,ipady=2,pady=2)
-    #view responce
+   
+    #Function to view responce
+    
     def responce():
-        global i
-        global point
-        rowlabel=4
-        rowentry=5
-        filename=forward+"responce"
-        file=open(filename,"rt")
-        userans=file.readlines()
-        file.close()
-        counter=0
-        def hideframe():
-            responceframe.destroy()
-        responceframe=Frame(rajat,bg="#2ECC71",height="50",width="50")
-        responceframe.grid(row=3,column=2,rowspan=50,columnspan="90",sticky="N")
-        Label(responceframe,text="NOTE:Only last 8 responce will be shown",font=("Arial Balck","12"),bg="#2ECC71").grid(row=3,column=2,sticky="E")
-        Label(responceframe,text="Detailed View",font=("Britannic Bold","18"),bg="#2ECC71",width="50").grid(row=1,column=0,columnspan="4")
-        Label(responceframe,text="Points",font=("Arial Balck","14"),bg="#2ECC71").grid(row=2,column=1,sticky="E")
-        crtpoint=StringVar()
-        Entry(responceframe,font=("Arial Black","18"),bd=0,state="disabled",disabledbackground="#2ECC71",disabledforeground="Black",textvariable=crtpoint).grid(row=2,column=2,sticky="W")
-        crtpoint.set(point)
-        Label(responceframe,text="Correct Answer Given",font=("Arial Balck","14"),bg="#2ECC71").grid(row=2,column=3)
-        crtans=StringVar()
-        Entry(responceframe,font=("Arial Black","18"),bd=0,disabledforeground="Black",state="disabled",disabledbackground="#2ECC71",textvariable=crtans).grid(row=2,column=4)
-        crtans.set(point//5)
-        cut=Button(responceframe,text="X",cursor="hand2",command=hideframe,bg="#2ECC71",font=("Arial Black","12"),bd=0,highlightcolor="Red")
-        cut.grid(row=1,column=4,sticky="E")
-        while counter<i:
-            Label(responceframe,text="Your responce",font=("Elephant","14"),bg="#2ECC71").grid(row=rowlabel,column=1,pady=4,ipady=2,sticky="E")
-            setresponce=StringVar()
-            userresponce=Entry(responceframe,font=("Arial Black","14"),state="disabled",bd=0,foreground="#17202A",width="60",textvariable=setresponce)
-            setresponce.set(userans[counter])
-            userresponce.grid(row=rowlabel,column=2,pady=4,ipady=2,sticky="W",columnspan="4")
-            Label(responceframe,text="Correct answer",font=("Elephant","14"),bg="#2ECC71").grid(row=rowentry,column=1,pady=4,ipady=2,sticky="E")
-            setanswer=StringVar()
-            if(userans[counter][:-1]==level1[counter]["answer"]):
-                color="#27AE60"
-            else:
-                color="#E74C3C"
-            correctanswer=Entry(responceframe,font=("Arial Black","14"),state="disabled",bd=0,disabledforeground=color,width="60",textvariable=setanswer)
-            setanswer.set(level1[counter]["answer"])
-            correctanswer.grid(row=rowentry,column=2,pady=4,ipady=2,sticky="W",columnspan="4")
-            rowlabel+=2
-            rowentry+=2
-            if(rowlabel==14):
-                rowlabel=4
-                rowentry=5
-            counter+=1
-    #view profile
+            responceframe=Frame(rajat,bg="#2ECC71",height="50",width="50")
+            responceframe.grid(row=3,column=2,rowspan=50,columnspan="90",sticky="N")
+            global i
+            global point
+            rowlabel=4
+            rowentry=5
+            filename=forward+"responce"
+            file=open(filename,"rt")
+            userans=file.readlines()
+            file.close()
+            counter=0
+            def hideframe():
+                responceframe.destroy()
+            Label(responceframe,text="NOTE:Only last 8 responce will be shown",font=("Arial Balck","12"),bg="#2ECC71").grid(row=3,column=2,sticky="E")
+            Label(responceframe,text="Detailed View",font=("Britannic Bold","18"),bg="#2ECC71",width="50").grid(row=1,column=0,columnspan="4")
+            Label(responceframe,text="Points",font=("Arial Balck","14"),bg="#2ECC71").grid(row=2,column=1,sticky="E")
+            crtpoint=StringVar()
+            Entry(responceframe,font=("Arial Black","18"),bd=0,state="disabled",disabledbackground="#2ECC71",disabledforeground="Black",textvariable=crtpoint).grid(row=2,column=2,sticky="W")
+            crtpoint.set(point)
+            Label(responceframe,text="Correct Answer Given",font=("Arial Balck","14"),bg="#2ECC71").grid(row=2,column=3)
+            crtans=StringVar()
+            Entry(responceframe,font=("Arial Black","18"),bd=0,disabledforeground="Black",state="disabled",disabledbackground="#2ECC71",textvariable=crtans).grid(row=2,column=4)
+            crtans.set(point//5)
+            cut=Button(responceframe,text="X",cursor="hand2",command=hideframe,bg="#2ECC71",font=("Arial Black","12"),bd=0,highlightcolor="Red")
+            cut.grid(row=1,column=4,sticky="E")
+            while counter<i:
+                if(userans[counter][:-1]==level1[counter]["answer"]):
+                    color="Black"
+                else:
+                    color="#E74C3C"
+                Label(responceframe,text="Your responce",font=("Elephant","14"),bg="#2ECC71").grid(row=rowlabel,column=1,pady=4,ipady=2,sticky="E")
+                setresponce=StringVar()
+                userresponce=Entry(responceframe,font=("Arial Black","14"),state="disabled",bd=0,disabledforeground=color,width="60",textvariable=setresponce)
+                setresponce.set(userans[counter])
+                userresponce.grid(row=rowlabel,column=2,pady=4,ipady=2,sticky="W",columnspan="4")
+                Label(responceframe,text="Correct answer",font=("Elephant","14"),bg="#2ECC71").grid(row=rowentry,column=1,pady=4,ipady=2,sticky="E")
+                setanswer=StringVar()
+                correctanswer=Entry(responceframe,font=("Arial Black","14"),state="disabled",bd=0,disabledforeground="#27AE60",width="60",textvariable=setanswer)
+                setanswer.set(level1[counter]["answer"])
+                correctanswer.grid(row=rowentry,column=2,pady=4,ipady=2,sticky="W",columnspan="4")
+                rowlabel+=2
+                rowentry+=2
+                if(rowlabel==14):
+                    rowlabel=4
+                    rowentry=5
+                counter+=1
+            
+    #Function to view profile
+    
     def viewprofile():
         global i
         def hide():
@@ -456,22 +474,29 @@ def game(phno):
         if(i==15):
             Label(profileframe,text="Congratualation! You have succesfully completed the game.",fg="#F1C40F",font=("Elephant","18"),bg="#E74C3C").grid(row=11,column=1,columnspan=2,sticky="W")
         file.close()
-    # Restart game
+        
+    #Function to Restart game
+    
     def restart():
-        global point
-        global i
-        point=0
-        i=0
-        file=open(forward,"rt")
-        data=file.readlines()
-        file.close()
-        data[3]=str(point)+"\n"
-        data[4]=str(i)
-        file=open(forward,"wt")
-        file.writelines(data)
-        file.close()
-        rajat.destroy()
-        game(forward)
+        msg=messagebox.askquestion("Jumble Juggle","All your current progress will be lost. Do you want to continue?",icon='warning')
+        if(msg=="no"):
+            pass
+        else:
+            global point
+            global i
+            point=0
+            i=0
+            file=open(forward,"rt")
+            data=file.readlines()
+            file.close()
+            data[3]=str(point)+"\n"
+            data[4]=str(i)
+            file=open(forward,"wt")
+            file.writelines(data)
+            file.close()
+            rajat.destroy()
+            game(forward)
+    
     def logout():
         global exp
         global point
@@ -491,6 +516,9 @@ def game(phno):
         point=0
         rajat.destroy()
         main()
+        
+    #defining game interface
+    
     if(i==15):
         viewprofile()
     setans= StringVar()
@@ -512,6 +540,7 @@ def game(phno):
     mb.menu.add_cascade( label="View Instruction",font=("Impact","14"),command=intro)
     mb.menu.add_cascade( label="Change Password",font=("Impact","14"),command=changepass)
     mb.menu.add_cascade( label="Restart Game",font=("Impact","14"),command=restart)
+    mb.menu.add_cascade( label="View Detailed Information",font=("Impact","14"),command=responce)
     mb.menu.add_cascade( label="Logout",font=("Impact","14"),command=logout)
     pointbox=Label(rajat,text="Points:",font=("Britannic Bold","18"),bg="#F1C40F")
     pointbox.grid(row=1,column=0,sticky="E")
@@ -520,6 +549,9 @@ def game(phno):
     setpoint=Entry(rajat,state="disabled",cursor="arrow",bd=0,textvariable=poin,font=("Britannic Bold","18"),disabledforeground="#17202A",disabledbackground="#F1C40F")
     setpoint.grid(row=1,column=1,sticky="W",columnspan=2,ipadx=2,ipady=2,pady=2)
     poin.set(point)
+    
+    #Function to add jumble words
+    
     def add(got):
         global exp
         got=got.replace("\n"," ")
@@ -528,6 +560,9 @@ def game(phno):
         print(exp)
         setans.set(exp)
         forward=phno
+        
+        #function to check answer
+        
     def check():
         global gameplay
         global exp
@@ -560,6 +595,9 @@ def game(phno):
         file.writelines(data)
         file.close()
         game(forward)
+        
+        #Function to clear answer box
+        
     def clear():
         global exp
         exp=""
@@ -583,14 +621,9 @@ def game(phno):
     ans=Label(rajat,text="Answer:",font=("Britannic Bold","18"),bg="#F1C40F")
     ans.grid(row=5,column=0,sticky="E")
     clr=Button(rajat,text="Clear",font=("Cooper Black","12"),cursor="hand2",command=clear,bd=0,height="2",bg="#E74C3C",fg="White")
-    clr.grid(row=10,column=3,sticky="W",padx=2,ipadx=3,ipady=2)
-    '''responce=StringVar()
-    message=Message(rajat,textvariable=responce,bg="Red",fg="Black")
-    responce.set("Waiting For your responce...")
-    message.grid(row=11,column=3,columnspan=4)'''
-    #from here we are making instruction
+    clr.grid(row9871298048=10,column=3,sticky="W",padx=2,ipadx=3,ipady=2)
     if(gameplay==0):
         intro()
     rajat.mainloop()
     
-main()
+main()  #The final function call to start program
