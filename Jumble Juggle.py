@@ -2,6 +2,8 @@ import tkinter as tk       #tThe module for GUi
 from tkinter import *
 from tkinter import messagebox     #The module for Pop-up Box
 import os  
+from firebase import firebase
+firebase=firebase.FirebaseApplication('https://jumble-juggle.firebaseio.com/')
 
 # Defining all question with options and answers
 question1={"option":{1:"twice",2:"a day",3:"brush your",4:"teeth"},"answer":"brush your teeth twice a day "}
@@ -55,10 +57,11 @@ def main():
         def forgotpass():
             def check():
                 flag=1
-                file=open(user,"rt")
-                data=file.readlines()
-                file.close()
-                if(testem.get()!=data[2][:-1]):
+                result=firebase.get("/user",user)
+               # file=open(user,"rt")
+                #data=file.readlines()
+               # file.close()
+                if(testem.get()!=result["Email"]):
                     messagebox.showerror("Forgot Password","The Email you entered did not matched with our records")
                     flag=0
                 else:
@@ -69,12 +72,17 @@ def main():
                         messagebox.showerror("Forgot Password","Confirm Password don't match")
                         flag=0
                 if(flag==1):
-                    data[0]=getpass.get()+"\n"
+                    #data[0]=getpass.get()+"\n"
+                    newpas=getpass.get()
+                    name1=result["Name"]
+                    email=result["Email"]
+                    firebase.delete("/user",user)
+                    firebase.put("/user",user,{"Password":newpas,"Name":name1,"Email":email})
                     messagebox.showinfo("Forgot Password","Password reset successful")
-                    file=open(user,"wt")
-                    file.writelines(data)
-                    file.close()
-                    forgot.destroy()
+                    #file=open(user,"wt")
+                    #file.writelines(data)
+                   # file.close()
+                    #forgot.destroy()
                     window.destroy()
                     main()
             def hide():
@@ -106,13 +114,17 @@ def main():
             messagebox.showerror("Login", "Enter password first")
             flag=0
         if(flag==1):
-            if(os.path.exists(user)):
-                file=open(user,"rt")
-                text=file.readline()
-                text=text[0:-1]
+            result=firebase.get("/user",user)
+            if(result):
+                text=result["Password"]
+           # if(os.path.exists(user)):
+            #    file=open(user,"rt")
+            #    text=file.readline()
+            #    text=text[0:-1]
                 if(text==pas):
                     window.destroy()
-                    game(user)
+                    print("Login Successful")
+                    #game(user)
                 else:
                     msg=messagebox.askretrycancel("Login","Wrong Password")
                     if(msg==False):
@@ -179,11 +191,12 @@ def signup():
                 flag=0
             import os
             if(flag==1):
-                if(os.path.exists(phone.get())):
+                result=firebase.get("/user",phn)
+                if(result!=None):
                     messagebox.showerror("Signup", "This number is already registered")
                     num.set("")
                 else:
-                    file=open(phn,"wt")
+                    '''' file=open(phn,"wt")
                     file.write(pas)
                     file.write("\n")
                     file.write(name1)
@@ -193,10 +206,14 @@ def signup():
                     file.write(str(point))
                     file.write("\n")
                     file.write(str(i))
-                    file.close()
-                    messagebox.showinfo("Signup", "You are registered succesfully")
-                    sign.destroy()
-                    main()
+                    file.close()'''
+                    wrote=firebase.put("/user",phn,{"Password":pas,"Name":name1,"Email":email})
+                    if(wrote):
+                        messagebox.showinfo("Signup", "You are registered succesfully")
+                        sign.destroy()
+                        main()
+                    else:
+                        print("Error while creating database")
                     
             return
     sign=tk.Tk()
