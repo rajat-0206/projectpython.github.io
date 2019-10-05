@@ -3,6 +3,8 @@ from tkinter import *
 from tkinter import messagebox     #The module for Pop-up Box
 import os  
 from firebase import firebase
+import smtplib
+import random
 firebase=firebase.FirebaseApplication('https://jumble-juggle.firebaseio.com/')
 
 # Defining all question with options and answers
@@ -185,7 +187,7 @@ def signup():
                       flag=0
                 else:
                     name1=" ".join(nam)
-            if("@" not in email or ".com" not in email):
+            if("@" not in email):
                 messagebox.showerror("Signup", "Input a valid Email")
                 em.set("")
                 flag=0
@@ -196,6 +198,50 @@ def signup():
                     messagebox.showerror("Signup", "This number is already registered")
                     num.set("")
                 else:
+                    def sendmail(reciept):
+                        lis=[1,2,3,4,5,6,7,8,9,0]
+                        code=str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))
+                        content="Hello\nYou have requested for verification so your code is "+code
+                        mail=smtplib.SMTP('smtp.gmail.com',587)
+                        mail.ehlo()
+                        mail.starttls()
+                        recipient=reciept
+                        sender='noreply.jumblejuggle@gmail.com'
+                        mail.login('noreply.jumblejuggle@gmail.com','Jumble@123')
+                        header="To:"+recipient+"\n"+"From:"+sender+"\n"+"Subject:Verify your email\n"
+                        content=header+content
+                        mail.sendmail(sender,recipient,content)
+                        mail.close()
+                        return code
+                    code=sendmail(email)
+                    def checkmail():
+                        print(code,mailotp.get(),type(code),len(mailotp.get()))
+                        if(mailotp.get()==code):
+                            verify.destroy()
+                            verified=1
+                        else:
+                            messagebox.showerror("Verify Email","Invalid OTP.Try again!")
+                            verified=0
+                        if(verified==1):
+                            wrote=firebase.put("/user",phn,{"Password":pas,"Name":name1,"Email":email})
+                            if(wrote):
+                                messagebox.showinfo("Signup", "You are registered succesfully")
+                                sign.destroy()
+                                main()
+                            else:
+                                print("Error while creating database")
+                    def hideverify():
+                        verify.destroy()
+                    verify=Frame(sign,bg="#E74C3C",height="50",width="100")
+                    verify.grid(row=3,column=2,rowspan=50,columnspan="90",sticky="N")
+                    Label(verify,text="We have sent a confirmation mail on the email {}".format(email),font=("Arial Black","12"),bg="#E74C3C",width="100").grid(row=1,column=0,columnspan="4"),
+                    Label(verify,text="Enter the OTP".format(email),font=("Arial Black","12"),bg="#E74C3C").grid(row=3,column=1,sticky="E")    
+                    mailotp=Entry(verify,bd=0,font=("Arial Black","14"),foreground="#17202A")
+                    mailotp.grid(row=3,column=2,pady=4,ipady=2,sticky="W")
+                    chk=Button(verify,text="Verify Email",cursor="hand2",font=("Cooper Black","12"),command=checkmail,bd=0,height="2",bg="#F7DC6F",fg="Black")
+                    chk.grid(row=4,column=2,sticky="W",padx=2,ipadx=3,ipady=2,pady=2)
+                    cut=Button(verify,text="Change Email Id",cursor="hand2",font=("Cooper Black","12"),command=hideverify,bd=0,height="2",bg="#F7DC6F",fg="Black")
+                    cut.grid(row=4,column=1,sticky="E",padx=2,ipadx=3,ipady=2,pady=2)
                     '''' file=open(phn,"wt")
                     file.write(pas)
                     file.write("\n")
@@ -207,18 +253,12 @@ def signup():
                     file.write("\n")
                     file.write(str(i))
                     file.close()'''
-                    wrote=firebase.put("/user",phn,{"Password":pas,"Name":name1,"Email":email})
-                    if(wrote):
-                        messagebox.showinfo("Signup", "You are registered succesfully")
-                        sign.destroy()
-                        main()
-                    else:
-                        print("Error while creating database")
+                    
                     
             return
     sign=tk.Tk()
     sign.title("SIGN UP")
-    sign.iconbitmap("Game.ico")
+    #sign.iconbitmap("Game.ico")
     sign.geometry("900x900")
     sign.configure(background="#AAB7B8")
     Frame(sign,bg="#AAB7B8",height="900",width="160").grid(row=1,column=1,rowspan=50)
