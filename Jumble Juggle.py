@@ -56,6 +56,8 @@ def main():
     window.configure(background="#82E0AA")  
     window.iconbitmap("Game.ico")
     def login():
+        global point
+        global i
         def forgotpass():
             def check():
                 flag=1
@@ -79,7 +81,11 @@ def main():
                     name1=result["Name"]
                     email=result["Email"]
                     firebase.delete("/user",user)
+<<<<<<< Updated upstream
                     firebase.put("/user",user,{"Password":newpas,"Name":name1,"Email":email})
+=======
+                    firebase.put("/user",phn,{"Password":pas,"Name":name1,"Email":email,"Points":str(point),"Currently on Level":str(i)})
+>>>>>>> Stashed changes
                     messagebox.showinfo("Forgot Password","Password reset successful")
                     #file=open(user,"wt")
                     #file.writelines(data)
@@ -223,7 +229,11 @@ def signup():
                             messagebox.showerror("Verify Email","Invalid OTP.Try again!")
                             verified=0
                         if(verified==1):
+<<<<<<< Updated upstream
                             wrote=firebase.put("/user",phn,{"Password":pas,"Name":name1,"Email":email})
+=======
+                            wrote=firebase.put("/user",phn,{"Password":pas,"Name":name1,"Email":email,"Points":str(point),"Currently on Level":str(i)})
+>>>>>>> Stashed changes
                             if(wrote):
                                 messagebox.showinfo("Signup", "You are registered succesfully")
                                 sign.destroy()
