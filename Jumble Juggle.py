@@ -81,11 +81,8 @@ def main():
                     name1=result["Name"]
                     email=result["Email"]
                     firebase.delete("/user",user)
-<<<<<<< Updated upstream
                     firebase.put("/user",user,{"Password":newpas,"Name":name1,"Email":email})
-=======
                     firebase.put("/user",phn,{"Password":pas,"Name":name1,"Email":email,"Points":str(point),"Currently on Level":str(i)})
->>>>>>> Stashed changes
                     messagebox.showinfo("Forgot Password","Password reset successful")
                     #file=open(user,"wt")
                     #file.writelines(data)
@@ -205,16 +202,17 @@ def signup():
                     num.set("")
                 else:
                     def sendmail(reciept):
-                        lis=[1,2,3,4,5,6,7,8,9,0]
+                        lis=[1,2,3,4,5,6,7,8,9,0,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
                         code=str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))
-                        content="Hello\nYou have requested for verification so your code is "+code
+                        content="Hey there!\n\nYou have requested for verification. Here is your temporary verification code: "+code+"\n\nDo not share this code with anyone.\n\nIf this were not you, then you may simply disregard this email.\n\n\nRegards,\nTeam Jumble Juggle."
+                        print(code)
                         mail=smtplib.SMTP('smtp.gmail.com',587)
                         mail.ehlo()
                         mail.starttls()
-                        recipient=reciept
+                        recipient=email
                         sender='noreply.jumblejuggle@gmail.com'
                         mail.login('noreply.jumblejuggle@gmail.com','Jumble@123')
-                        header="To:"+recipient+"\n"+"From:"+sender+"\n"+"Subject:Verify your email\n"
+                        header="To:"+recipient+"\n"+"From:"+sender+"\n"+"Subject:Confirmation for Jumble Juggle Sign Up\n"
                         content=header+content
                         mail.sendmail(sender,recipient,content)
                         mail.close()
@@ -229,11 +227,8 @@ def signup():
                             messagebox.showerror("Verify Email","Invalid OTP.Try again!")
                             verified=0
                         if(verified==1):
-<<<<<<< Updated upstream
                             wrote=firebase.put("/user",phn,{"Password":pas,"Name":name1,"Email":email})
-=======
                             wrote=firebase.put("/user",phn,{"Password":pas,"Name":name1,"Email":email,"Points":str(point),"Currently on Level":str(i)})
->>>>>>> Stashed changes
                             if(wrote):
                                 messagebox.showinfo("Signup", "You are registered succesfully")
                                 sign.destroy()
