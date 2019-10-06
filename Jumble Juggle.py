@@ -15,6 +15,8 @@ i=1  #The variable to hold question number
 point=0 #Variable of points
 gameplay=0   # The variable telling gameplay
 
+#The function to send mail
+
 #The login Function
 def main():
     window=tk.Tk()
