@@ -358,56 +358,7 @@ def game(phno):
             chk=Button(change,text="Reset Password",cursor="hand2",font=("Arial Black","12"),command=check,bd=0,height="2",bg="#F7DC6F",fg="Black")
             chk.grid(row=9,column=2,sticky="W",padx=2,ipadx=3,ipady=2,pady=2)
    
-    #Function to view responce
-    
-    def responce():
-            responceframe=Frame(rajat,bg="#2ECC71",height="50",width="50")
-            responceframe.grid(row=3,column=2,rowspan=50,columnspan="90",sticky="N")
-            global i
-            global point
-            rowlabel=4
-            rowentry=5
-            filename=forward+"responce"
-            file=open(filename,"rt")
-            userans=file.readlines()
-            file.close()
-            counter=0
-            def hideframe():
-                responceframe.destroy()
-            Label(responceframe,text="NOTE:Only last 8 responce will be shown",font=("Arial Balck","12"),bg="#2ECC71").grid(row=3,column=2,sticky="E")
-            Label(responceframe,text="Detailed View",font=("Britannic Bold","18"),bg="#2ECC71",width="50").grid(row=1,column=0,columnspan="4")
-            Label(responceframe,text="Points",font=("Arial Balck","14"),bg="#2ECC71").grid(row=2,column=1,sticky="E")
-            crtpoint=StringVar()
-            Entry(responceframe,font=("Arial Black","18"),bd=0,state="disabled",disabledbackground="#2ECC71",disabledforeground="Black",textvariable=crtpoint).grid(row=2,column=2,sticky="W")
-            crtpoint.set(point)
-            Label(responceframe,text="Correct Answer Given",font=("Arial Balck","14"),bg="#2ECC71").grid(row=2,column=3)
-            crtans=StringVar()
-            Entry(responceframe,font=("Arial Black","18"),bd=0,disabledforeground="Black",state="disabled",disabledbackground="#2ECC71",textvariable=crtans).grid(row=2,column=4)
-            crtans.set(point//5)
-            cut=Button(responceframe,text="X",cursor="hand2",command=hideframe,bg="#2ECC71",font=("Arial Black","12"),bd=0,highlightcolor="Red")
-            cut.grid(row=1,column=4,sticky="E")
-            while counter<i:
-                if(userans[counter][:-1]==level1[counter]["answer"]):
-                    color="Black"
-                else:
-                    color="#E74C3C"
-                Label(responceframe,text="Your responce",font=("Elephant","14"),bg="#2ECC71").grid(row=rowlabel,column=1,pady=4,ipady=2,sticky="E")
-                setresponce=StringVar()
-                userresponce=Entry(responceframe,font=("Arial Black","14"),state="disabled",bd=0,disabledforeground=color,width="60",textvariable=setresponce)
-                setresponce.set(userans[counter])
-                userresponce.grid(row=rowlabel,column=2,pady=4,ipady=2,sticky="W",columnspan="4")
-                Label(responceframe,text="Correct answer",font=("Elephant","14"),bg="#2ECC71").grid(row=rowentry,column=1,pady=4,ipady=2,sticky="E")
-                setanswer=StringVar()
-                correctanswer=Entry(responceframe,font=("Arial Black","14"),state="disabled",bd=0,disabledforeground="#27AE60",width="60",textvariable=setanswer)
-                setanswer.set(level1[counter]["answer"])
-                correctanswer.grid(row=rowentry,column=2,pady=4,ipady=2,sticky="W",columnspan="4")
-                rowlabel+=2
-                rowentry+=2
-                if(rowlabel==14):
-                    rowlabel=4
-                    rowentry=5
-                counter+=1
-            
+
     #Function to view profile
     
     def viewprofile():
@@ -437,34 +388,12 @@ def game(phno):
                   #  file=open(forward,"w")
                   #  file.writelines(data)
                   #  file.close()
-                    result=firebase.get("/users",forward)
+                    result=firebase.get("/user",forward)
                     points=result["Points"]
                     col=result["Currently on Level"]
                     email=result["Email"]
                     psw=result["Password"]
                     firebase.put("/user",forward,{"Password":psw,"Name":name1,"Email":email,"Points":points,"Currently on Level":col})
-                    messagebox.showinfo("Jumble Juggle", "Update Successful")
-                    rajat.destroy()
-                    game(forward)
-            else:
-                if(string=="Enter new Email"):
-                    messagebox.showerror("Jumble Juggle","Please provide input")
-                elif("@" not in string):
-                    messagebox.showerror("Jumble Juggle", "Input a valid Email") 
-                else:
-                   # file=open(forward,"rt")
-                   # data=file.readlines()
-                   # file.close()
-                   # data[2]=string+"\n"
-                   # file=open(forward,"w")
-                   # file.writelines(data)
-                   # file.close()
-                    result=firebase.get("/users",forward)
-                    points=result["Points"]
-                    col=result["Currently on Level"]
-                    name=result["Email"]
-                    psw=result["Password"]
-                    firebase.put("/user",forward,{"Password":psw,"Name":name,"Email":string,"Points":points,"Currently on Level":col})
                     messagebox.showinfo("Jumble Juggle", "Update Successful")
                     rajat.destroy()
                     game(forward)
@@ -474,10 +403,6 @@ def game(phno):
             if(i==1):
                 getans.insert(0,"Enter new name")
                 finalbt=Button(profileframe,bd=0,cursor="hand2",bg="#2D69AB",fg="White",font=("Cooper Black","12"),text="Update",command=lambda:update(getans.get(),1))
-                finalbt.grid(row=10,column=1,columnspan=2,padx=2,ipadx=2,ipady=2)
-            else:
-                getans.insert(0,"Enter new Email")
-                finalbt=Button(profileframe,bd=0,cursor="hand2",bg="#2D69AB",font=("Cooper Black","12"),fg="White",text="Update",command=lambda:update(getans.get(),2))
                 finalbt.grid(row=10,column=1,columnspan=2,padx=2,ipadx=2,ipady=2)
         profileframe=Frame(rajat,bg="#E74C3C",height="50",width="60")
         profileframe.grid(row=6,column=1,rowspan=50,columnspan="90",sticky="N")
@@ -517,11 +442,9 @@ def game(phno):
         showques=StringVar()
         Entry(profileframe,state="disabled",font=("Berlin Sans FB","14"),textvariable=showques,bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=8,column=2,sticky="W")
         showques.set(point//5)
-        ed3=Button(profileframe,text="View Detailed Information",bg="#E74C3C",cursor="hand2",fg="White",bd=0,command=lambda:responce())
-        ed3.grid(row=8,column=3,sticky="W")
-        ed2=Button(profileframe,text="edit",bg="#E74C3C",cursor="hand2",fg="White",bd=0,command=lambda:edit(2))
-        ed2.grid(row=5,column=3,sticky="W")
-        if(i==15):
+      #  ed3=Button(profileframe,text="View Detailed Information",bg="#E74C3C",cursor="hand2",fg="White",bd=0,command=lambda:responce())
+       # ed3.grid(row=8,column=3,sticky="W")
+        if(i==16):
             Label(profileframe,text="Congratualation! You have succesfully completed the game.",fg="#F1C40F",font=("Elephant","18"),bg="#E74C3C").grid(row=11,column=1,columnspan=2,sticky="W")
         #file.close()
         
@@ -535,7 +458,7 @@ def game(phno):
             global point
             global i
             point=0
-            i=0
+            i=1
            # file=open(forward,"rt")
            # data=file.readlines()
            # file.close()
@@ -544,8 +467,8 @@ def game(phno):
            # file=open(forward,"wt")
            # file.writelines(data)
            # file.close()
-           # rajat.destroy()
-            result=firebase.get("/users",forward)
+            rajat.destroy()
+            result=firebase.get("/user",forward)
             name=result["Name"]
             email=result["Email"]
             psw=result["Password"]
@@ -572,14 +495,14 @@ def game(phno):
         firebase.put("/user",forward,{"Password":psw,"Name":name,"Email":email,"Points":str(point),"Currently on Level":str(i)})
         gameplay=0
         exp=""
-        i=0
+        i=1
         point=0
         rajat.destroy()
         main()
         
     #defining game interface
     
-    if(i==15):
+    if(i==16):
         viewprofile()
     setans= StringVar()
     ansbox=Entry(rajat,cursor="arrow",text="",width="60",state="disabled",disabledforeground="#17202A",font=("Berlin Sans FB Demi","14"),bd=0,textvariable=setans)
@@ -602,7 +525,7 @@ def game(phno):
     mb.menu.add_cascade( label="View Instruction",font=("Impact","14"),command=intro)
     mb.menu.add_cascade( label="Change Password",font=("Impact","14"),command=changepass)
     mb.menu.add_cascade( label="Restart Game",font=("Impact","14"),command=restart)
-    mb.menu.add_cascade( label="View Detailed Information",font=("Impact","14"),command=responce)
+  #  mb.menu.add_cascade( label="View Detailed Information",font=("Impact","14"),command=responce)
     mb.menu.add_cascade( label="Logout",font=("Impact","14"),command=logout)
     pointbox=Label(rajat,text="Points:",font=("Britannic Bold","18"),bg="#F1C40F")
     pointbox.grid(row=1,column=0,sticky="E")
@@ -699,3 +622,52 @@ def game(phno):
     rajat.mainloop()
     
 main()  #The final function call to start program
+    #Function to view responce
+    
+'''    def responce():
+            responceframe=Frame(rajat,bg="#2ECC71",height="50",width="50")
+            responceframe.grid(row=3,column=2,rowspan=50,columnspan="90",sticky="N")
+            global i
+            global point
+            rowlabel=4
+            rowentry=5
+            filename=forward+"responce"
+            file=open(filename,"rt")
+            userans=file.readlines()
+            file.close()
+            counter=0
+            def hideframe():
+                responceframe.destroy()
+            Label(responceframe,text="NOTE:Only last 8 responce will be shown",font=("Arial Balck","12"),bg="#2ECC71").grid(row=3,column=2,sticky="E")
+            Label(responceframe,text="Detailed View",font=("Britannic Bold","18"),bg="#2ECC71",width="50").grid(row=1,column=0,columnspan="4")
+            Label(responceframe,text="Points",font=("Arial Balck","14"),bg="#2ECC71").grid(row=2,column=1,sticky="E")
+            crtpoint=StringVar()
+            Entry(responceframe,font=("Arial Black","18"),bd=0,state="disabled",disabledbackground="#2ECC71",disabledforeground="Black",textvariable=crtpoint).grid(row=2,column=2,sticky="W")
+            crtpoint.set(point)
+            Label(responceframe,text="Correct Answer Given",font=("Arial Balck","14"),bg="#2ECC71").grid(row=2,column=3)
+            crtans=StringVar()
+            Entry(responceframe,font=("Arial Black","18"),bd=0,disabledforeground="Black",state="disabled",disabledbackground="#2ECC71",textvariable=crtans).grid(row=2,column=4)
+            crtans.set(point//5)
+            cut=Button(responceframe,text="X",cursor="hand2",command=hideframe,bg="#2ECC71",font=("Arial Black","12"),bd=0,highlightcolor="Red")
+            cut.grid(row=1,column=4,sticky="E")
+            while counter<i:
+                if(userans[counter][:-1]==level1[counter]["answer"]):
+                    color="Black"
+                else:
+                    color="#E74C3C"
+                Label(responceframe,text="Your responce",font=("Elephant","14"),bg="#2ECC71").grid(row=rowlabel,column=1,pady=4,ipady=2,sticky="E")
+                setresponce=StringVar()
+                userresponce=Entry(responceframe,font=("Arial Black","14"),state="disabled",bd=0,disabledforeground=color,width="60",textvariable=setresponce)
+                setresponce.set(userans[counter])
+                userresponce.grid(row=rowlabel,column=2,pady=4,ipady=2,sticky="W",columnspan="4")
+                Label(responceframe,text="Correct answer",font=("Elephant","14"),bg="#2ECC71").grid(row=rowentry,column=1,pady=4,ipady=2,sticky="E")
+                setanswer=StringVar()
+                correctanswer=Entry(responceframe,font=("Arial Black","14"),state="disabled",bd=0,disabledforeground="#27AE60",width="60",textvariable=setanswer)
+                setanswer.set(level1[counter]["answer"])
+                correctanswer.grid(row=rowentry,column=2,pady=4,ipady=2,sticky="W",columnspan="4")
+                rowlabel+=2
+                rowentry+=2
+                if(rowlabel==14):
+                    rowlabel=4
+                    rowentry=5
+                counter+=1'''       
