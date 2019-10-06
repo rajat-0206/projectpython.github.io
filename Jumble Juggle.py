@@ -8,43 +8,10 @@ import random
 firebase=firebase.FirebaseApplication('https://jumble-juggle.firebaseio.com/')
 
 # Defining all question with options and answers
-question1={"option":{1:"twice",2:"a day",3:"brush your",4:"teeth"},"answer":"brush your teeth twice a day "}
-question2={"option":{1:"a story",2:"narrating",3:"tomorrow",4:"I will be"},"answer":"I will be narrating a story tomorrow "}
-question3={"option":{1:"pray to",2:"we should",3:"daily",4:"god"},"answer":"we should pray to god daily "}
-question4={"option":{1:"father",2:"my",3:"me",4:"trust"},"answer":"my father trust me "}
-question5={"option":{1:"Delhi",2:"fort",3:"is in",4:"Red"},"answer":"Red fort is in Delhi "}
-question6={"option":{1:"the",2:"ball",3:"with",4:"Rohan",5:"is playing"},"answer":"Rohan is playing with the ball "}
-question7={"option":{1:"love",2:"of others",3:"good\nmanners",4:"win the",5:"and respect"},"answer":"good manners win the love and respect of others "}
-question8={"option":{1:"the",2:"the",3:"kept",4:"rail safe",5:"sleeper"},"answer":"the sleeper kept the rail safe "}
-question9={"option":{1:"the",2:"jumped",3:"the dog",4:"pond",5:"into"},"answer":"the dog jumped into the pond "}
-question10={"option":{1:"is",2:"to school",3:"late",4:"Rishu",5:"always"},"answer":"Rishu is always late to school "}
-question11={"option":{1:"who is",2:"strangers",3:"respectful",4:"a person",5:"even",6:"like"},"answer":"even strangers like a person who is respectful "}
-question12={"option":{1:"saves us",2:"turns away",3:"a\nsoft\nanswer",4:"anger and",5:"a pitfall",6:"from many"},"answer":"a soft answer turns away anger and saves us from many a pitfall  "}
-question13={"option":{1:"when",2:"best",3:"good\nmanners\ncan",4:"one is",5:"be learnt",6:"young"},"answer":"good manners can be learnt best when one is young "}
-question14={"option":{1:"deadly\nweapons",2:"of",3:"science\nhas",4:"warfare",5:"given",6:"man"},"answer":"science has given man deadly weapons of warfare "}
-question15={"option":{1:"armed",2:"which are",3:"miracles",4:"science\nhas",5:"man\nwith\ninventions",6:"not less than"},"answer":"science has armed man with inventions which are not less than miracles "}
-
-#creating a list and insrting all question in it
-level1=[]
-level1.insert(0,question1)
-level1.insert(1,question2)
-level1.insert(2,question3)
-level1.insert(3,question4)
-level1.insert(4,question5)
-level1.insert(5,question6)
-level1.insert(6,question7)
-level1.insert(7,question8)
-level1.insert(8,question9)
-level1.insert(9,question10)
-level1.insert(10,question11)
-level1.insert(11,question12)
-level1.insert(12,question13)
-level1.insert(13,question14)
-level1.insert(14,question15)
 
 
 exp=""   #The variable to hold user answer
-i=0     #The variable to hold question number
+i=1  #The variable to hold question number
 point=0 #Variable of points
 gameplay=0   # The variable telling gameplay
 
@@ -81,8 +48,7 @@ def main():
                     name1=result["Name"]
                     email=result["Email"]
                     firebase.delete("/user",user)
-                    firebase.put("/user",user,{"Password":newpas,"Name":name1,"Email":email})
-                    firebase.put("/user",phn,{"Password":pas,"Name":name1,"Email":email,"Points":str(point),"Currently on Level":str(i)})
+                    firebase.put("/user",user,{"Password":newpas,"Name":name1,"Email":email,"Points":str(point),"Currently on Level":str(i)})
                     messagebox.showinfo("Forgot Password","Password reset successful")
                     #file=open(user,"wt")
                     #file.writelines(data)
@@ -128,8 +94,7 @@ def main():
             #    text=text[0:-1]
                 if(text==pas):
                     window.destroy()
-                    print("Login Successful")
-                    #game(user)
+                    game(user)
                 else:
                     msg=messagebox.askretrycancel("Login","Wrong Password")
                     if(msg==False):
@@ -204,7 +169,7 @@ def signup():
                     def sendmail(reciept):
                         lis=[1,2,3,4,5,6,7,8,9,0,'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
                         code=str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))+str(random.choice(lis))
-                        content="Hey there!\n\nYou have requested for verification. Here is your temporary verification code: "+code+"\n\nDo not share this code with anyone.\n\nIf this were not you, then you may simply disregard this email.\n\n\nRegards,\nTeam Jumble Juggle."
+                        content="Hey "+name1+"!\n\nHope you are doing well.\n\nYou have requested for verification. Here is your temporary verification code: "+code+"\n\nDo not share this code with anyone.\n\nIf this were not you, then you may simply disregard this email.\n\n\nRegards,\nTeam Jumble Juggle."
                         print(code)
                         mail=smtplib.SMTP('smtp.gmail.com',587)
                         mail.ehlo()
@@ -227,7 +192,6 @@ def signup():
                             messagebox.showerror("Verify Email","Invalid OTP.Try again!")
                             verified=0
                         if(verified==1):
-                            wrote=firebase.put("/user",phn,{"Password":pas,"Name":name1,"Email":email})
                             wrote=firebase.put("/user",phn,{"Password":pas,"Name":name1,"Email":email,"Points":str(point),"Currently on Level":str(i)})
                             if(wrote):
                                 messagebox.showinfo("Signup", "You are registered succesfully")
@@ -333,23 +297,29 @@ def game(phno):
         t6.grid(row=13,sticky="W")
         cross.grid(row=1,column=4,ipadx=2,ipady=2)
     if(gameplay==0):
-        file=open(forward,"rt")
-        data=file.readlines()
-        i=int(data[4])
-        point=int(data[3][:-1])
+        #file=open(forward,"rt")
+       # data=file.readlines()
+       # i=int(data[4])
+       # point=int(data[3][:-1])
+        result=firebase.get("/user",forward)
+        i=result["Currently on Level"]
+        i=int(i)
+        point=result["Points"]
+        point=int(point)
         
     #function to change password
     
     def changepass():
             def check():
                 flag=1
-                file=open(forward,"rt")
-                data=file.readlines()
-                file.close()
-                if(getcurrpass.get()!=data[0][:-1]):
+                #file=open(forward,"rt")
+                #data=file.readlines()
+                #file.close()
+                result=firebase.get("/user",forward)
+                if(getcurrpass.get()!=result["Password"]):
                      messagebox.showerror("Change Password","Current password don't match")
                      flag=0
-                if(getpass.get()==data[0][:-1]):
+                if(getpass.get()==result["Password"]):
                     messagebox.showerror("Change Password","New password chould be different from old password")
                     flag=0
                 if(len(getpass.get())<8):
@@ -359,11 +329,15 @@ def game(phno):
                         messagebox.showerror("Change Password","Confirm Password don't match")
                         flag=0
                 if(flag==1):
-                    data[0]=getpass.get()+"\n"
+                    points=result["Points"]
+                    col=result["Currently on Level"]
+                    email=result["Email"]
+                    name=result["Name"]
+                    firebase.put("/user",forward,{"Password":getpass.get(),"Name":name,"Email":email,"Points":points,"Currently on Level":col})
                     messagebox.showinfo("Forgot Password","Password reset successful")
-                    file=open(forward,"wt")
-                    file.writelines(data)
-                    file.close()
+                   # file=open(forward,"wt")
+                   # file.writelines(data)
+                   # file.close()
                     change.destroy()
             def hide():
                 change.destroy()
@@ -456,29 +430,41 @@ def game(phno):
                         else:
                             name1=" ".join(string)
                 if(flag==1):
-                    file=open(forward,"rt")
-                    data=file.readlines()
-                    file.close()
-                    data[1]=name1+"\n"
-                    file=open(forward,"w")
-                    file.writelines(data)
-                    file.close()
+                  #  file=open(forward,"rt")
+                   # data=file.readlines()
+                   # file.close()
+                   # data[1]=name1+"\n"
+                  #  file=open(forward,"w")
+                  #  file.writelines(data)
+                  #  file.close()
+                    result=firebase.get("/users",forward)
+                    points=result["Points"]
+                    col=result["Currently on Level"]
+                    email=result["Email"]
+                    psw=result["Password"]
+                    firebase.put("/user",forward,{"Password":psw,"Name":name1,"Email":email,"Points":points,"Currently on Level":col})
                     messagebox.showinfo("Jumble Juggle", "Update Successful")
                     rajat.destroy()
                     game(forward)
             else:
                 if(string=="Enter new Email"):
                     messagebox.showerror("Jumble Juggle","Please provide input")
-                elif("@" not in string or ".com" not in string):
+                elif("@" not in string):
                     messagebox.showerror("Jumble Juggle", "Input a valid Email") 
                 else:
-                    file=open(forward,"rt")
-                    data=file.readlines()
-                    file.close()
-                    data[2]=string+"\n"
-                    file=open(forward,"w")
-                    file.writelines(data)
-                    file.close()
+                   # file=open(forward,"rt")
+                   # data=file.readlines()
+                   # file.close()
+                   # data[2]=string+"\n"
+                   # file=open(forward,"w")
+                   # file.writelines(data)
+                   # file.close()
+                    result=firebase.get("/users",forward)
+                    points=result["Points"]
+                    col=result["Currently on Level"]
+                    name=result["Email"]
+                    psw=result["Password"]
+                    firebase.put("/user",forward,{"Password":psw,"Name":name,"Email":string,"Points":points,"Currently on Level":col})
                     messagebox.showinfo("Jumble Juggle", "Update Successful")
                     rajat.destroy()
                     game(forward)
@@ -498,8 +484,9 @@ def game(phno):
         Label(profileframe,text="Profile",font=("Britannic Bold","18"),bg="#E74C3C",width="50").grid(row=1,column=0,columnspan="4")
         cut=Button(profileframe,text="X",command=hide,cursor="hand2",font="14",bg="#E74C3C",bd=0,activebackground="#E74C3C",activeforeground="White")
         cut.grid(row=1,column=4,sticky="E")
-        file=open(forward,"rt")
-        file.readline()
+        #file=open(forward,"rt")
+       # file.readline()
+        result=firebase.get("/user",forward)
         Label(profileframe,text="Phone Number:",font=("Berlin Sans FB","14"),bg="#E74C3C").grid(row=3,column=1,sticky="E")
         no=IntVar()
         Entry(profileframe,state="disabled",textvariable=no,font=("Berlin Sans FB","14"),bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=3,column=2,sticky="W")
@@ -507,24 +494,24 @@ def game(phno):
         Label(profileframe,text="Name:",font=("Berlin Sans FB","14"),bg="#E74C3C").grid(row=4,column=1,sticky="E")
         Name=StringVar()
         Entry(profileframe,state="disabled",font=("Berlin Sans FB","14"),textvariable=Name,bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=4,column=2,sticky="W")
-        tempvar1=file.readline()
+        tempvar1=result["Name"]
         Name.set(tempvar1)
         ed1=Button(profileframe,text="edit",cursor="hand2",bg="#E74C3C",fg="White",bd=0,command=lambda:edit(1))
         ed1.grid(row=4,column=3,sticky="W")
         Label(profileframe,text="Email Id:",font=("Berlin Sans FB","14"),bg="#E74C3C").grid(row=5,column=1,sticky="E")
         Emailid=StringVar()
         Entry(profileframe,state="disabled",font=("Berlin Sans FB","14"),textvariable=Emailid,bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=5,column=2,sticky="W")
-        tempvar2=file.readline()
+        tempvar2=result["Email"]
         Emailid.set(tempvar2)
         Label(profileframe,text="Points:",font=("Berlin Sans FB","14"),bg="#E74C3C").grid(row=6,column=1,sticky="E")
         setpoint=StringVar()
         Entry(profileframe,state="disabled",font=("Berlin Sans FB","14"),textvariable=setpoint,bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=6,column=2,sticky="W")
-        tempvar3=file.readline()
+        tempvar3=result["Points"]
         setpoint.set(tempvar3)
         Label(profileframe,text="Cuurently on level:",font=("Berlin Sans FB","14"),bg="#E74C3C").grid(row=7,column=1,sticky="E")
         showlevel=StringVar()
         Entry(profileframe,state="disabled",font=("Berlin Sans FB","14"),textvariable=showlevel,bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=7,column=2,sticky="W")
-        tempvar4=file.readline()
+        tempvar4=result["Currently on Level"]
         showlevel.set(tempvar4)
         Label(profileframe,text="Correct Answer given:",font=("Berlin Sans FB","14"),bg="#E74C3C").grid(row=8,column=1,sticky="E")
         showques=StringVar()
@@ -536,7 +523,7 @@ def game(phno):
         ed2.grid(row=5,column=3,sticky="W")
         if(i==15):
             Label(profileframe,text="Congratualation! You have succesfully completed the game.",fg="#F1C40F",font=("Elephant","18"),bg="#E74C3C").grid(row=11,column=1,columnspan=2,sticky="W")
-        file.close()
+        #file.close()
         
     #Function to Restart game
     
@@ -549,15 +536,20 @@ def game(phno):
             global i
             point=0
             i=0
-            file=open(forward,"rt")
-            data=file.readlines()
-            file.close()
-            data[3]=str(point)+"\n"
-            data[4]=str(i)
-            file=open(forward,"wt")
-            file.writelines(data)
-            file.close()
-            rajat.destroy()
+           # file=open(forward,"rt")
+           # data=file.readlines()
+           # file.close()
+           # data[3]=str(point)+"\n"
+           # data[4]=str(i)
+           # file=open(forward,"wt")
+           # file.writelines(data)
+           # file.close()
+           # rajat.destroy()
+            result=firebase.get("/users",forward)
+            name=result["Name"]
+            email=result["Email"]
+            psw=result["Password"]
+            firebase.put("/user",forward,{"Password":psw,"Name":name,"Email":email,"Points":str(point),"Currently on Level":str(i)})
             game(forward)
     
     def logout():
@@ -565,14 +557,19 @@ def game(phno):
         global point
         global i
         global gameplay
-        file=open(forward,"rt")
-        data=file.readlines()
-        file.close()
-        data[3]=str(point)+"\n"
-        data[4]=str(i)
-        file=open(forward,"wt")
-        file.writelines(data)
-        file.close()
+       # file=open(forward,"rt")
+       # data=file.readlines()
+       # file.close()
+      #  data[3]=str(point)+"\n"
+      #  data[4]=str(i)
+      #  file=open(forward,"wt")
+      #  file.writelines(data)
+      #  file.close()
+        result=firebase.get("/user",forward)
+        name=result["Name"]
+        email=result["Email"]
+        psw=result["Password"]
+        firebase.put("/user",forward,{"Password":psw,"Name":name,"Email":email,"Points":str(point),"Currently on Level":str(i)})
         gameplay=0
         exp=""
         i=0
@@ -588,10 +585,12 @@ def game(phno):
     ansbox=Entry(rajat,cursor="arrow",text="",width="60",state="disabled",disabledforeground="#17202A",font=("Berlin Sans FB Demi","14"),bd=0,textvariable=setans)
     ansbox.grid(row=5,column=1,columnspan=9,sticky="W",ipady="3",pady="4")
     rajat.title("Jumble Juggle")
-    file=open(phno,"rt")
-    file.readline()
-    usernam=file.readline()
-    file.close()
+    #file=open(phno,"rt")
+    ##file.readline()
+    #usernam=file.readline()
+    #file.close()
+    result=firebase.get("/user",phno)
+    usernam=result["Name"]
     usernam="Hello "+str.title(usernam)
     user=Label(rajat,text=usernam,font=("Arial","18"),bg="#F1C40F",fg="#3498DB")
     user.grid(row=1,column=4,columnspan=1,sticky="E")
@@ -631,12 +630,14 @@ def game(phno):
         global exp
         global point
         global i
-        filename=forward+"responce"
-        file=open(filename,"at")
-        file.write(exp)
-        file.write("\n")
-        file.close()
-        if(exp==level1[i]["answer"]):
+        #filename=forward+"responce"
+        #file=open(filename,"at")
+        #file.write(exp)
+        #file.write("\n")
+       # file.close()
+        questionno="question"+str(i)
+        question=firebase.get("/questions",questionno)
+        if(exp==question["answer"]):
             exp=""
             setans.set(exp)
             point+=5
@@ -649,14 +650,19 @@ def game(phno):
             i+=1
             gameplay+=1
             rajat.destroy()  
-        file=open(forward,"rt")
-        data=file.readlines()
-        file.close()
-        data[3]=str(point)+"\n"
-        data[4]=str(i)
-        file=open(forward,"wt")
-        file.writelines(data)
-        file.close()
+        result=firebase.get("/user",forward)
+        name=result["Name"]
+        email=result["Email"]
+        psw=result["Password"]
+        firebase.put("/user",forward,{"Password":psw,"Name":name,"Email":email,"Points":str(point),"Currently on Level":str(i)})
+        #file=open(forward,"rt")
+        #data=file.readlines()
+        #file.close()
+       # data[3]=str(point)+"\n"
+       # data[4]=str(i)
+       # file=open(forward,"wt")
+       # file.writelines(data)
+       # file.close()
         game(forward)
         
         #Function to clear answer box
@@ -665,26 +671,29 @@ def game(phno):
         global exp
         exp=""
         setans.set(exp)
-    bt1=Button(rajat,text=level1[i]["option"][1],height="4",bg="#5DADE2",cursor="hand2",fg="#CB4335",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(level1[i]["option"][1]))
-    bt2=Button(rajat,text=level1[i]["option"][2],height="4",bg="#5DADE2",fg="#CB4335",cursor="hand2",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(level1[i]["option"][2]))
-    bt3=Button(rajat,text=level1[i]["option"][3],height="4",bg="#5DADE2",fg="#CB4335",cursor="hand2",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(level1[i]["option"][3]))
-    bt4=Button(rajat,text=level1[i]["option"][4],height="4",bg="#5DADE2",fg="#CB4335",cursor="hand2",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(level1[i]["option"][4]))
+    questionno="question"+str(i)
+    question=firebase.get("/questions",questionno)
+    print(question,questionno)
+    bt1=Button(rajat,text=question["option"][1],height="4",bg="#5DADE2",cursor="hand2",fg="#CB4335",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(question["option"][1]))
+    bt2=Button(rajat,text=question["option"][2],height="4",bg="#5DADE2",fg="#CB4335",cursor="hand2",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(question["option"][2]))
+    bt3=Button(rajat,text=question["option"][3],height="4",bg="#5DADE2",fg="#CB4335",cursor="hand2",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(question["option"][3]))
+    bt4=Button(rajat,text=question["option"][4],height="4",bg="#5DADE2",fg="#CB4335",cursor="hand2",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(question["option"][4]))
     bt1.grid(row=3,column=1,padx=1,sticky="W")
     bt2.grid(row=3,column=2,padx=1,sticky="W")
     bt3.grid(row=3,column=3,padx=1,sticky="W")
     bt4.grid(row=3,column=4,padx=1,sticky="W")
-    if(i>=5):
-        bt5=Button(rajat,text=level1[i]["option"][5],height="4",bg="#5DADE2",cursor="hand2",fg="#CB4335",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(level1[i]["option"][5]))
+    if(i>5):
+        bt5=Button(rajat,text=question["option"][5],height="4",bg="#5DADE2",cursor="hand2",fg="#CB4335",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(question["option"][5]))
         bt5.grid(row=3,column=5,padx=1,sticky="W")
-    if(i>=10):
-        bt6=Button(rajat,text=level1[i]["option"][6],height="4",bg="#5DADE2",cursor="hand2",fg="#CB4335",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(level1[i]["option"][6]))
+    if(i>10):
+        bt6=Button(rajat,text=question["option"][6],height="4",bg="#5DADE2",cursor="hand2",fg="#CB4335",font=("Berlin Sans FB","14"),width="10",bd=0,command=lambda: add(question["option"][6]))
         bt6.grid(row=3,column=6,padx=1,sticky="W")
     chk=Button(rajat,text="Submit",font=("Cooper Black","12"),cursor="hand2",command=check,bd=0,height="2",bg="#E74C3C",fg="White")
     chk.grid(row=10,column=4,sticky="W",padx=2,ipadx=3,ipady=2)
     ans=Label(rajat,text="Answer:",font=("Britannic Bold","18"),bg="#F1C40F")
     ans.grid(row=5,column=0,sticky="E")
     clr=Button(rajat,text="Clear",font=("Cooper Black","12"),cursor="hand2",command=clear,bd=0,height="2",bg="#E74C3C",fg="White")
-    clr.grid(row9871298048=10,column=3,sticky="W",padx=2,ipadx=3,ipady=2)
+    clr.grid(row=10,column=3,sticky="W",padx=2,ipadx=3,ipady=2)
     if(gameplay==0):
         intro()
     rajat.mainloop()
