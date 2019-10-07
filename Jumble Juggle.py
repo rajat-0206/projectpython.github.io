@@ -314,7 +314,8 @@ def game(phno):
             responceframe=Frame(rajat,bg="#2ECC71",height="50",width="50")
             responceframe.grid(row=3,column=2,rowspan=50,columnspan="90",sticky="N")
             data=firebase.get("/userresponce",forward)
-            p=len(data)
+            if(data!=None):
+                p=len(data)
             correct=firebase.get("/questions",None)
             question="question"+str(counter)
             def hideframe():
@@ -346,6 +347,9 @@ def game(phno):
             crtans.set(point//5)
             cut=Button(responceframe,text="X",cursor="hand2",command=hideframe,bg="#2ECC71",font=("Arial Black","12"),bd=0,highlightcolor="Red")
             cut.grid(row=1,column=4,sticky="E")
+            if(data==None):
+                Label(responceframe,text="Quiet Scilence Here!!!\n Answer your first question to see details.",font=("Arial Balck","14"),bg="#2ECC71").grid(row=3,column=0,columnspan="4")
+                      
             if(data[counter-1]==correct[question]["answer"]):
                 color="Black"
             else:
@@ -493,7 +497,10 @@ def game(phno):
         Label(profileframe,text="Cuurently on level:",font=("Berlin Sans FB","14"),bg="#E74C3C").grid(row=7,column=1,sticky="E")
         showlevel=StringVar()
         Entry(profileframe,state="disabled",font=("Berlin Sans FB","14"),textvariable=showlevel,bd=0,disabledbackground="#E74C3C",disabledforeground="#17202A").grid(row=7,column=2,sticky="W")
-        tempvar4=result["Currently on Level"]
+        if(i==16):
+            tempvar4="Completed the Game"
+        else:
+            tempvar4=result["Currently on Level"]
         showlevel.set(tempvar4)
         Label(profileframe,text="Correct Answer given:",font=("Berlin Sans FB","14"),bg="#E74C3C").grid(row=8,column=1,sticky="E")
         showques=StringVar()
