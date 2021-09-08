@@ -17,7 +17,9 @@
     original : from .async import process_pool
     after changing: from .asyncn import process_pool
 
-5. Now come to root of the project and run the project by following command.
+5. Add your email and password on line number 180. 
+
+6. Now come to root of the project and run the project by following command.
     ```
     python "Jumble Juggle.py"
     ```

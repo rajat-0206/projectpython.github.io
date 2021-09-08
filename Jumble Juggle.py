@@ -177,8 +177,8 @@ def signup():
                         mail.ehlo()
                         mail.starttls()
                         recipient=email
-                        sender='noreply.jumblejuggle@gmail.com'
-                        mail.login('noreply.jumblejuggle@gmail.com','Jumble@123')
+                        sender='<YOUR EMAIL ADDRESS>'
+                        mail.login('<YOUR EMAIL ADDRESS>','<YOUR EMAIL PASSWORD>')
                         header="To:"+recipient+"\n"+"From:"+sender+"\n"+"Subject:Confirmation for Jumble Juggle Sign Up\n"
                         content=header+content
                         mail.sendmail(sender,recipient,content)
